@@ -1,7 +1,11 @@
 import * as S from './styles';
 
-const LoadingSpinner = () => {
-  return <S.LoadingSpinnerWrapper />;
+interface LoadingSpinnerProps {
+  color: 'primary' | 'white';
+}
+
+const LoadingSpinner = ({ color }: LoadingSpinnerProps) => {
+  return <S.LoadingSpinnerWrapper $color={color} />;
 };
 
 export default LoadingSpinner;

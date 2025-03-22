@@ -10,11 +10,14 @@ const spinnerRotate = keyframes`
   }
 `;
 
-export const LoadingSpinnerWrapper = styled.div`
-  width: 3.6rem;
-  height: 3.6rem;
-  border: 0.4rem solid ${({ theme }) => theme.colors.primary};
+type SpinnerColor = 'primary' | 'white';
+
+export const LoadingSpinnerWrapper = styled.div<{ $color: SpinnerColor }>`
+  width: 3rem;
+  height: 3rem;
+  border: 0.4rem solid ${({ theme, $color }) => ($color === 'primary' ? theme.colors.primary : theme.colors.gray100)};
   border-left-color: transparent;
+  border-radius: 50%;
 
   animation: ${spinnerRotate} 1s linear infinite;
 `;
