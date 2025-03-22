@@ -28,7 +28,14 @@ const generateStyle = (buttonStyle: ButtonStyle) => {
   }
 };
 
-export const ButtonContainer = styled.button<{ $styleType: ButtonStyle }>`
+interface ButtonContainerStyleProps {
+  $styleType: ButtonStyle;
+  $isLoading: boolean;
+}
+
+export const ButtonContainer = styled.button<ButtonContainerStyleProps>`
+  cursor: ${({ $isLoading }) => $isLoading && 'not-allowed'};
+
   position: relative;
 
   display: flex;
@@ -40,7 +47,7 @@ export const ButtonContainer = styled.button<{ $styleType: ButtonStyle }>`
   padding: 1.2rem 1.6rem;
   border-radius: 0.8rem;
 
-  ${({ $styleType }) => generateStyle($styleType)}
+  ${({ $styleType }) => generateStyle($styleType)};
 `;
 
 export const ContentWrapper = styled.div<{ $isLoading: boolean }>`

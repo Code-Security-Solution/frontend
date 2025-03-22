@@ -9,7 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = ({ styleType, isLoading = false, children, ...props }: PropsWithChildren<ButtonProps>) => {
   return (
-    <S.ButtonContainer $styleType={styleType} {...props}>
+    <S.ButtonContainer $styleType={styleType} $isLoading={isLoading} {...props}>
       <S.ContentWrapper $isLoading={isLoading}>{children}</S.ContentWrapper>
       {isLoading && (
         <S.SpinnerWrapper>
