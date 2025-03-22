@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 62.5%; /* 1rem = 10px */
     color: black;
 
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.gray100};
   }
 
   button {
