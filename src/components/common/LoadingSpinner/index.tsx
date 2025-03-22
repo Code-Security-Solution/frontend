@@ -1,7 +1,8 @@
+import { ButtonStyle } from '../Button/styles';
 import * as S from './styles';
 
 interface LoadingSpinnerProps {
-  color: 'primary' | 'white';
+  color: ButtonStyle;
 }
 
 const LoadingSpinner = ({ color }: LoadingSpinnerProps) => {

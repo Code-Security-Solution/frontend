@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { ButtonStyle } from '../Button/styles';
 
 const spinnerRotate = keyframes`
   0% {
@@ -10,12 +11,22 @@ const spinnerRotate = keyframes`
   }
 `;
 
-type SpinnerColor = 'primary' | 'white';
-
-export const LoadingSpinnerWrapper = styled.div<{ $color: SpinnerColor }>`
+export const LoadingSpinnerWrapper = styled.div<{ $color: ButtonStyle }>`
   width: 3rem;
   height: 3rem;
-  border: 0.4rem solid ${({ theme, $color }) => ($color === 'primary' ? theme.colors.primary : theme.colors.gray100)};
+  border: 0.4rem solid
+    ${({ theme, $color }) => {
+      switch ($color) {
+        case 'primary':
+          return theme.colors.primary;
+
+        case 'secondary':
+          return theme.colors.white;
+
+        case 'disabled':
+          return theme.colors.gray500;
+      }
+    }};
   border-left-color: transparent;
   border-radius: 50%;
 
