@@ -27,6 +27,11 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.colors.gray100};
   }
 
+  ul,
+  li {
+    list-style: none;
+  }
+
   button {
     cursor: pointer;
     border: none;
