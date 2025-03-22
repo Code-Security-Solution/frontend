@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import Button from '../Button';
 
 export const HeaderContainer = styled.div`
+  position: absolute;
+  top: 0;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
