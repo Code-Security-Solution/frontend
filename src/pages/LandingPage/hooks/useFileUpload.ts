@@ -14,7 +14,15 @@ const useFileUpload = () => {
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const selectedFiles = Array.from(e.target.files);
-    setFiles((prev) => [...prev, ...selectedFiles]);
+    setFiles((prevFiles) => {
+      const uniqueFiles = selectedFiles.filter(
+        (file) =>
+          !prevFiles.some(
+            (prevFile) => prevFile.name === file.name && prevFile.size === file.size && prevFile.type === file.type,
+          ),
+      );
+      return [...prevFiles, ...uniqueFiles];
+    });
   };
 
   // 드래그 카운터 증가 및 상태 활성화
@@ -48,13 +56,21 @@ const useFileUpload = () => {
   // 카운터 초기화, 상태 해제 및 파일 추가
   const handleDragDrop = (e: DragEvent) => {
     if (!e.dataTransfer) return;
-
     e.preventDefault();
+
     setDragCounter(0);
     setIsDragging(false);
 
     const droppedFiles = Array.from(e.dataTransfer.files);
-    setFiles((prev) => [...prev, ...droppedFiles]);
+    setFiles((prevFiles) => {
+      const uniqueFiles = droppedFiles.filter(
+        (file) =>
+          !prevFiles.some(
+            (prevFile) => prevFile.name === file.name && prevFile.size === file.size && prevFile.type === file.type,
+          ),
+      );
+      return [...prevFiles, ...uniqueFiles];
+    });
   };
 
   useEffect(() => {
