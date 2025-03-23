@@ -36,6 +36,9 @@ const LandingPage = () => {
               <S.EmptyFileMessage>클릭하거나 드래그해서 파일을 선택해 보세요</S.EmptyFileMessage>
             </S.DashBorderBox>
           </S.EmptyFileContainer>
+          <S.SubmitButton styleType="primary" $isVisible={files.length > 0}>
+            코드 분석
+          </S.SubmitButton>
         </S.FileUploadForm>
       </S.LandingPageContainer>
     </>

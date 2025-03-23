@@ -130,3 +130,14 @@ export const FileItem = styled.li`
 export const DeleteFileButton = styled.button`
   color: ${({ theme }) => theme.colors.gray500};
 `;
+
+export const SubmitButton = styled(Button)<{ $isVisible: boolean }>`
+  pointer-events: ${({ $isVisible }) => ($isVisible ? 'auto' : 'none')};
+
+  width: 20rem;
+  margin-top: 3.2rem;
+
+  opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
+
+  transition: opacity 0.3s;
+`;
