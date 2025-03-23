@@ -1,5 +1,12 @@
+import { Outlet } from 'react-router-dom';
+import PageLayout from './layouts/PageLayout';
+
 const App = () => {
-  return <div>App</div>;
+  return (
+    <PageLayout>
+      <Outlet />
+    </PageLayout>
+  );
 };
 
 export default App;

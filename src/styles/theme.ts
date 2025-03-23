@@ -1,4 +1,4 @@
-import { CSSProperties, DefaultTheme } from 'styled-components';
+import { CSSProperties, DefaultTheme, RuleSet, css } from 'styled-components';
 
 const colors = {
   // main colors
@@ -24,43 +24,39 @@ const colors = {
   severity_info: '#00e39f',
 };
 
-interface Font {
-  size: CSSProperties['fontSize'];
-  weight: CSSProperties['fontWeight'];
-  lineHeight: CSSProperties['lineHeight'];
-}
+type FontType = 'title1' | 'title2' | 'subtitle' | 'mediumBody' | 'regularBody' | 'description';
 
-const fonts: Record<string, Font> = {
-  title1: {
-    size: '3.2rem',
-    weight: 700,
-    lineHeight: '4rem',
-  },
-  title2: {
-    size: '2.4rem',
-    weight: 700,
-    lineHeight: '3.2rem',
-  },
-  subtitle: {
-    size: '2rem',
-    weight: 600,
-    lineHeight: '2.8rem',
-  },
-  mediumBody: {
-    size: '1.6rem',
-    weight: 500,
-    lineHeight: '2rem',
-  },
-  regularBody: {
-    size: '1.6rem',
-    weight: 400,
-    lineHeight: '2rem',
-  },
-  description: {
-    size: '1.4rem',
-    weight: 400,
-    lineHeight: '1.6rem',
-  },
+const fonts: Record<FontType, RuleSet> = {
+  title1: css`
+    font-size: 3.2rem;
+    font-weight: 700;
+    line-height: 4rem;
+  `,
+  title2: css`
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 3.2rem;
+  `,
+  subtitle: css`
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 2.8rem;
+  `,
+  mediumBody: css`
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 2rem;
+  `,
+  regularBody: css`
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 2rem;
+  `,
+  description: css`
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.6rem;
+  `,
 };
 
 export type ColorsType = typeof colors;
