@@ -3,14 +3,15 @@ import { FaFileCode, FaTimes } from 'react-icons/fa';
 import useFileUpload from './hooks/useFileUpload';
 
 const LandingPage = () => {
-  const { files, isDragging, fileInputRef, handleFileInputChange, handleClickFileInput } = useFileUpload();
+  const { files, isDragging, fileInputRef, handleFileInputChange, handleClickFileInput, handleDeleteFile } =
+    useFileUpload();
 
   return (
     <>
       {isDragging && <S.DragOverlay />}
       <S.LandingPageContainer>
         <S.FileUploadForm>
-          <S.GuideText>소스 코드를 업로드해서 보안 취약점이 있는지 확인해 보세요.</S.GuideText>
+          <S.GuideText>소스 코드를 업로드해서 보안 취약점이 있는지 간단하게 확인해 보세요.</S.GuideText>
           <S.EmptyFileContainer>
             {files.length > 0 && (
               <>
@@ -20,7 +21,7 @@ const LandingPage = () => {
                     {files.map((file, index) => (
                       <S.FileItem key={`${file.name}_${index}`}>
                         {file.name}
-                        <S.DeleteFileButton>
+                        <S.DeleteFileButton onClick={() => handleDeleteFile(file)}>
                           <FaTimes size={24} />
                         </S.DeleteFileButton>
                       </S.FileItem>

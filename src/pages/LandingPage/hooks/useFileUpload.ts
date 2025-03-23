@@ -23,6 +23,17 @@ const useFileUpload = () => {
       );
       return [...prevFiles, ...uniqueFiles];
     });
+
+    e.target.value = '';
+  };
+
+  const handleDeleteFile = (fileToDelete: File) => {
+    setFiles((prev) =>
+      prev.filter(
+        (file) =>
+          !(file.name === fileToDelete.name && file.size === fileToDelete.size && file.type === fileToDelete.type),
+      ),
+    );
   };
 
   // 드래그 카운터 증가 및 상태 활성화
@@ -93,6 +104,7 @@ const useFileUpload = () => {
     fileInputRef,
     handleFileInputChange,
     handleClickFileInput,
+    handleDeleteFile,
   };
 };
 
