@@ -3,24 +3,38 @@ import App from './App';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ProtectedRoute from './components/ProtectedRoute';
+import useAuth from './hooks/useAuth';
+
+const { isLoggedIn } = useAuth();
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      {
-        index: true,
-        element: <LandingPage />,
-      },
+      // 모두 접근 가능한 페이지
+      { index: true, element: <LandingPage /> },
+
+      // 로그인 안 한 사용자만 접근 가능한 페이지
       {
         path: '/login',
-        element: <LoginPage />,
+        element: (
+          <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/">
+            <LoginPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: '/register',
-        element: <RegisterPage />,
+        element: (
+          <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/">
+            <RegisterPage />
+          </ProtectedRoute>
+        ),
       },
+
+      // 로그인 한 사용자만 접근 가능한 페이지
     ],
   },
 ]);
