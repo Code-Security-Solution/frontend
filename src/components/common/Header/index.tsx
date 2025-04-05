@@ -17,6 +17,10 @@ const Header = () => {
     navigate('/');
   };
 
+  const handleClickLoginButton = () => {
+    navigate('/login');
+  };
+
   return (
     <S.HeaderContainer>
       <S.LogoIcon src={LogoIcon} alt="" onClick={handleClickLogoIcon} />
@@ -24,9 +28,12 @@ const Header = () => {
         <S.MenuList>
           <S.MenuWrapper onClick={handleClickTeamInfoButton}>팀 소개</S.MenuWrapper>
         </S.MenuList>
-        <S.AnalysisButton styleType="secondary" onClick={handleClickAnalysisButton}>
-          코드 분석
-        </S.AnalysisButton>
+        <S.MenuList>
+          <S.MenuWrapper onClick={handleClickAnalysisButton}>코드 분석</S.MenuWrapper>
+        </S.MenuList>
+        <S.LoginButton styleType="secondary" onClick={handleClickLoginButton}>
+          로그인
+        </S.LoginButton>
       </S.NavBarContainer>
     </S.HeaderContainer>
   );
