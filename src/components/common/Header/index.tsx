@@ -1,8 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import LogoIcon from '@/assets/Logo.svg';
+import useAuth from '@/hooks/useAuth';
+import ProfileInfo from '@/components/Profile/ProfileInfo';
+import UndraggableWrapper from '../UndraggableWrapper';
 
 const Header = () => {
+  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
 
   const handleClickLogoIcon = () => {
@@ -22,20 +26,28 @@ const Header = () => {
   };
 
   return (
-    <S.HeaderContainer>
-      <S.LogoIcon src={LogoIcon} alt="" onClick={handleClickLogoIcon} />
-      <S.NavBarContainer>
-        <S.MenuList>
-          <S.MenuWrapper onClick={handleClickTeamInfoButton}>팀 소개</S.MenuWrapper>
-        </S.MenuList>
-        <S.MenuList>
-          <S.MenuWrapper onClick={handleClickAnalysisButton}>코드 분석</S.MenuWrapper>
-        </S.MenuList>
-        <S.LoginButton styleType="secondary" onClick={handleClickLoginButton}>
-          로그인
-        </S.LoginButton>
-      </S.NavBarContainer>
-    </S.HeaderContainer>
+    <UndraggableWrapper>
+      <S.HeaderContainer>
+        <S.LogoIcon src={LogoIcon} alt="" onClick={handleClickLogoIcon} />
+        <S.NavBarContainer>
+          <S.MenuList>
+            <S.MenuWrapper onClick={handleClickAnalysisButton}>코드 분석</S.MenuWrapper>
+            <S.MenuWrapper onClick={handleClickTeamInfoButton}>팀 소개</S.MenuWrapper>
+            {isLoggedIn && (
+              <>
+                <S.MenuDivider />
+                <ProfileInfo email="example@email.com" />
+              </>
+            )}
+          </S.MenuList>
+          {!isLoggedIn && (
+            <S.LoginButton styleType="secondary" onClick={handleClickLoginButton}>
+              로그인
+            </S.LoginButton>
+          )}
+        </S.NavBarContainer>
+      </S.HeaderContainer>
+    </UndraggableWrapper>
   );
 };
 

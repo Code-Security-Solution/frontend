@@ -48,3 +48,9 @@ export const LoginButton = styled(Button)`
     opacity: 0.8;
   }
 `;
+
+export const MenuDivider = styled.div`
+  width: 0.1rem;
+  height: 2.8rem;
+  background-color: ${({ theme }) => theme.colors.black};
+`;
