@@ -1,6 +1,7 @@
 import * as S from './styles';
 import { FaFileCode, FaTimes } from 'react-icons/fa';
 import useFileUpload from './hooks/useFileUpload';
+import UndraggableWrapper from '@/components/common/UndraggableWrapper';
 
 const LandingPage = () => {
   const { files, isDragging, fileInputRef, handleFileInputChange, handleClickFileInput, handleDeleteFile } =
@@ -33,7 +34,9 @@ const LandingPage = () => {
             <S.FileInput type="file" multiple={true} ref={fileInputRef} onChange={handleFileInputChange} />
             <S.DashBorderBox $isFileSelected={files.length > 0} onClick={handleClickFileInput}>
               <FaFileCode size={48} />
-              <S.EmptyFileMessage>클릭하거나 드래그해서 파일을 선택해 보세요</S.EmptyFileMessage>
+              <UndraggableWrapper>
+                <S.EmptyFileMessage>클릭하거나 드래그해서 파일을 선택해 보세요</S.EmptyFileMessage>
+              </UndraggableWrapper>
             </S.DashBorderBox>
           </S.EmptyFileContainer>
           <S.SubmitButton styleType="primary" $isVisible={files.length > 0}>
