@@ -21,7 +21,8 @@ const useProfileTabElements = () => {
   };
 
   const handleLogout = () => {
-    console.log('로그아웃 클릭');
+    localStorage.removeItem('access_token');
+    navigate('/');
   };
 
   const profileTabElements: ProfileTabElement[] = [

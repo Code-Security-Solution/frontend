@@ -22,6 +22,15 @@ const LoginPage = () => {
     navigate('/register');
   };
 
+  const handleClickLogin = () => {
+    // 테스트용 admin 로그인
+    if (email === 'admin' && password === '1234') {
+      alert('admin 로그인 성공');
+      localStorage.setItem('access_token', 'admin_token');
+      navigate('/');
+    }
+  };
+
   return (
     <S.LoginPageContainer>
       <S.LoginForm variants={formDropVarients} initial="hidden" animate="visible">
@@ -31,7 +40,9 @@ const LoginPage = () => {
         </S.LoginFormHeader>
         <Input id="email" type="email" label="이메일" value={email} handleChange={handleChangeEmail} />
         <Input id="password" type="password" label="비밀번호" value={password} handleChange={handleChangePassword} />
-        <Button styleType="secondary">로그인</Button>
+        <Button styleType="secondary" onClick={handleClickLogin}>
+          로그인
+        </Button>
         <S.ToggleRegisterButton onClick={handleClickToggleRegister}>회원가입하기</S.ToggleRegisterButton>
       </S.LoginForm>
     </S.LoginPageContainer>
