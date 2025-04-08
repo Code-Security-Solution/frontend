@@ -17,7 +17,8 @@ const useProfileTabElements = () => {
   const navigate = useNavigate();
 
   const handleClickMyPageMenu = () => {
-    navigate('/mypage');
+    const userEmail: string = JSON.parse(localStorage.getItem('userInfo')!).email;
+    navigate(`/mypage/${userEmail}`);
   };
 
   const handleLogout = () => {

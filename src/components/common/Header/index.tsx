@@ -14,7 +14,7 @@ const Header = () => {
   };
 
   const handleClickTeamInfoButton = () => {
-    navigate('/team');
+    navigate('/introduction');
   };
 
   const handleClickAnalysisButton = () => {
@@ -32,7 +32,7 @@ const Header = () => {
         <S.NavBarContainer>
           <S.MenuList>
             <S.MenuWrapper onClick={handleClickAnalysisButton}>코드 분석</S.MenuWrapper>
-            <S.MenuWrapper onClick={handleClickTeamInfoButton}>팀 소개</S.MenuWrapper>
+            <S.MenuWrapper onClick={handleClickTeamInfoButton}>서비스 소개</S.MenuWrapper>
             {isLoggedIn && (
               <>
                 <S.MenuDivider />

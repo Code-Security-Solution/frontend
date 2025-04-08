@@ -27,6 +27,7 @@ const LoginPage = () => {
     if (email === 'admin' && password === '1234') {
       alert('admin 로그인 성공');
       localStorage.setItem('access_token', 'admin_token');
+      localStorage.setItem('userInfo', JSON.stringify({ email: 'admin' }));
       navigate('/');
     }
   };
