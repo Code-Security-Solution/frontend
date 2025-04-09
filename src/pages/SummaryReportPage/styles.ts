@@ -9,6 +9,7 @@ export const SummaryReportPageContainer = styled.div`
 export const SummaryReportSideBar = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 4.8rem;
 
   min-width: 35rem;
   padding: 3.2rem 1.6rem;
@@ -20,16 +21,27 @@ export const SeverityChartContainer = styled.div`
   flex-direction: column;
   gap: 1.6rem;
   align-items: center;
-
-  width: 100%;
-  height: 100%;
 `;
 
 export const SeverityChartTitle = styled.p`
   ${({ theme }) => theme.fonts.subtitle};
 `;
 
+export const ScannedFileInfoContainer = styled.div`
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 1.6rem;
+  align-items: center;
+`;
+
+export const ScannedFileInfoTitle = styled.p`
+  ${({ theme }) => theme.fonts.subtitle};
+`;
+
 export const SummaryReportContainer = styled.div`
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
