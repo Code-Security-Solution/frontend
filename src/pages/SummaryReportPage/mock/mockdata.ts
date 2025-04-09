@@ -3,13 +3,26 @@ import { SummaryReport } from '@/types/semgrep';
 export const DUMMY_DATA: SummaryReport = {
   user_id: 'user123',
   analyzed_at: new Date(),
-  scannedFiles: ['file1', 'file2'],
-  totalVulnerabilities: 5,
+  scannedFiles: [
+    'example1.cpp',
+    'example2.cpp',
+    'example3.cpp',
+    'example4.cpp',
+    'example5.cpp',
+    'example6.cpp',
+    'example7.cpp',
+    'example8.cpp',
+    'example9.cpp',
+    'example10.cpp',
+    'example11.cpp',
+    'example12.cpp',
+  ],
+  totalVulnerabilities: 12,
   severitySummary: {
-    critical: 1,
-    error: 2,
-    warning: 1,
-    info: 1,
+    critical: 3,
+    error: 3,
+    warning: 3,
+    info: 3,
   },
   vulnerabilities: [
     {
@@ -124,4 +137,9 @@ export const DUMMY_DATA: SummaryReport = {
   ],
 };
 
-export const totalDataCount = DUMMY_DATA.vulnerabilities.length;
+export const fileVulnerabilities = DUMMY_DATA.scannedFiles.map((file) => {
+  return {
+    filename: file,
+    count: DUMMY_DATA.vulnerabilities.filter((vuln) => vuln.file === file).length,
+  };
+});
