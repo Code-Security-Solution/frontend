@@ -1,4 +1,4 @@
-import { CSSProperties, DefaultTheme, RuleSet, css } from 'styled-components';
+import { DefaultTheme, RuleSet, css } from 'styled-components';
 
 const colors = {
   // main colors
