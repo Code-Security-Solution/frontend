@@ -3,8 +3,6 @@ import styled from 'styled-components';
 export const TooltipContainer = styled.div`
   position: relative;
   display: flex;
-  width: fit-content;
-  height: fit-content;
 
   &:hover > .tooltip,
   &:active > .tooltip {
@@ -22,6 +20,8 @@ export const TooltipContent = styled.div<TooltipStyleProps>`
 
   display: none;
 
+  width: max-content;
+  max-width: 40rem;
   padding: 0.8rem;
   border-radius: 0.8rem;
 
