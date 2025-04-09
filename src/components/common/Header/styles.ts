@@ -39,7 +39,7 @@ export const MenuWrapper = styled.li`
   ${({ theme }) => theme.fonts.mediumBody}
 `;
 
-export const AnalysisButton = styled(Button)`
+export const LoginButton = styled(Button)`
   height: 3.6rem;
   border-radius: 1.8rem;
   ${({ theme }) => theme.fonts.mediumBody}
@@ -47,4 +47,10 @@ export const AnalysisButton = styled(Button)`
   &:hover {
     opacity: 0.8;
   }
+`;
+
+export const MenuDivider = styled.div`
+  width: 0.1rem;
+  height: 2.8rem;
+  background-color: ${({ theme }) => theme.colors.black};
 `;
