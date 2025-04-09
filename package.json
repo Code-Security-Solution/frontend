@@ -38,6 +38,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
+    "msw": "^2.7.3",
     "postcss": "^8.5.3",
     "postcss-styled-syntax": "^0.7.1",
     "prettier": "^3.5.2",
