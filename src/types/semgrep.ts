@@ -21,7 +21,7 @@ export interface GetTotalScanResultResponse {
   result: SemgrepJsonRootObject | {};
 }
 
-type Severity = 'critical' | 'error' | 'warning' | 'info';
+export type Severity = 'critical' | 'error' | 'warning' | 'info';
 
 interface SeveritySummary {
   critical: number;
