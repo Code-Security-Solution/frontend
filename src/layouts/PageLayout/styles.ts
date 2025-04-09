@@ -13,6 +13,6 @@ export const LayoutContainer = styled.div`
 export const MainWrapper = styled.main`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 6rem);
   margin-top: 6rem;
 `;
