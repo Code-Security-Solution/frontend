@@ -8,8 +8,18 @@ import Tooltip from '@/components/common/Tooltip';
 import VulnerabilityItem from './components/VulnerabilityItem';
 import { groupedBySeverity } from './mock/groupedBySeverity';
 import { totalDataCount } from './mock/mockdata';
+import SeverityChart from './components/SeverityChart';
+import { getSeverityColors, Severity } from '@/types/semgrep';
 
-const severityOrder = ['critical', 'error', 'warning', 'info'];
+const severityOrder: Severity[] = ['critical', 'error', 'warning', 'info'];
+
+const severityChartData = Object.keys(groupedBySeverity).map((severity) => {
+  return {
+    severity: severity as Severity,
+    count: groupedBySeverity[severity as Severity].length,
+    color: getSeverityColors()[severity as keyof typeof getSeverityColors],
+  };
+});
 
 const SummaryReportPage = () => {
   // TODO: scanId로 API 호출하여 데이터 가져오기
@@ -18,7 +28,12 @@ const SummaryReportPage = () => {
 
   return (
     <S.SummaryReportPageContainer>
-      <S.SummaryReportSideBar>사이드바</S.SummaryReportSideBar>
+      <S.SummaryReportSideBar>
+        <S.SeverityChartContainer>
+          <S.SeverityChartTitle>심각도별 취약점 현황</S.SeverityChartTitle>
+          <SeverityChart contents={severityChartData} />
+        </S.SeverityChartContainer>
+      </S.SummaryReportSideBar>
       <S.SummaryReportContainer>
         <S.SummaryReportHeader>
           <S.HeaderTitleContainer>

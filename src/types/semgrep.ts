@@ -1,4 +1,6 @@
+import { CSSProperties } from 'styled-components';
 import { SemgrepJsonRootObject } from './semgrepSchema';
+import theme from '@/styles/theme';
 
 export interface PostFileUploadRequest {
   files: string[];
@@ -22,6 +24,13 @@ export interface GetTotalScanResultResponse {
 }
 
 export type Severity = 'critical' | 'error' | 'warning' | 'info';
+
+export const getSeverityColors = (): Record<Severity, CSSProperties['color']> => ({
+  critical: theme.colors.severity_critial,
+  error: theme.colors.severity_error,
+  warning: theme.colors.severity_warning,
+  info: theme.colors.severity_info,
+});
 
 interface SeveritySummary {
   critical: number;

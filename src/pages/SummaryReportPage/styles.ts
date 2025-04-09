@@ -15,6 +15,20 @@ export const SummaryReportSideBar = styled.div`
   border-right: 0.1rem solid ${({ theme }) => theme.colors.gray200};
 `;
 
+export const SeverityChartContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+`;
+
+export const SeverityChartTitle = styled.p`
+  ${({ theme }) => theme.fonts.subtitle};
+`;
+
 export const SummaryReportContainer = styled.div`
   display: flex;
   flex-direction: column;
