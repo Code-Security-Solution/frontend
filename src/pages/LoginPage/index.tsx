@@ -4,9 +4,11 @@ import { KeyboardEvent, useState } from 'react';
 import Button from '@/components/common/Button';
 import { useNavigate } from 'react-router-dom';
 import { formDropVarients } from '@/styles/motion';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { setAuthState } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,8 +28,7 @@ const LoginPage = () => {
     // 테스트용 admin 로그인
     if (email === 'admin' && password === '1234') {
       alert('admin 로그인 성공');
-      localStorage.setItem('access_token', 'admin_token');
-      localStorage.setItem('userInfo', JSON.stringify({ email: 'admin' }));
+      setAuthState({ token: 'admin_token', userInfo: { email: 'admin@email.com' } });
       navigate('/');
     }
   };

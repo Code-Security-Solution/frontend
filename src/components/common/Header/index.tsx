@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import LogoIcon from '@/assets/Logo.svg';
-import useAuth from '@/hooks/useAuth';
 import ProfileInfo from '@/components/Profile/ProfileInfo';
 import UndraggableWrapper from '../UndraggableWrapper';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 const Header = () => {
-  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
+  const { isAuthenticated, userInfo } = useAuthStore();
 
   const handleClickLogoIcon = () => {
     navigate('/');
@@ -33,14 +33,14 @@ const Header = () => {
           <S.MenuList>
             <S.MenuWrapper onClick={handleClickAnalysisButton}>코드 분석</S.MenuWrapper>
             <S.MenuWrapper onClick={handleClickTeamInfoButton}>서비스 소개</S.MenuWrapper>
-            {isLoggedIn && (
+            {isAuthenticated && (
               <>
                 <S.MenuDivider />
-                <ProfileInfo email="example@email.com" />
+                <ProfileInfo email={userInfo!.email} />
               </>
             )}
           </S.MenuList>
-          {!isLoggedIn && (
+          {!isAuthenticated && (
             <S.LoginButton styleType="secondary" onClick={handleClickLoginButton}>
               로그인
             </S.LoginButton>

@@ -1,16 +1,33 @@
 import { useNavigate } from 'react-router-dom';
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
+import { useAuthStore } from '@/stores/useAuthStore';
+import DimmedLoadingPage from '@/pages/LoadingPage/DimmedLoadingPage';
 
 interface ProtectedRouteProps {
-  isAllowed: boolean;
+  authority: 'memberOnly' | 'nonMemberOnly';
   redirectPath: string;
 }
 
-const ProtectedRoute = ({ isAllowed, redirectPath, children }: PropsWithChildren<ProtectedRouteProps>) => {
+const ProtectedRoute = ({ authority, redirectPath, children }: PropsWithChildren<ProtectedRouteProps>) => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
+  const [authChecked, setAuthChecked] = useState(false);
+
   useEffect(() => {
-    if (!isAllowed) navigate(redirectPath);
+    if (authority === 'memberOnly' && !isAuthenticated) {
+      navigate(redirectPath, { replace: false });
+    }
+
+    if (authority === 'nonMemberOnly' && isAuthenticated) {
+      navigate(redirectPath, { replace: false });
+    }
+
+    setAuthChecked(true);
   }, []);
+
+  if (!authChecked) {
+    return <DimmedLoadingPage />;
+  }
 
   return children;
 };

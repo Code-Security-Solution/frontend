@@ -4,12 +4,9 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProtectedRoute from './components/ProtectedRoute';
-import useAuth from './hooks/useAuth';
 import IntroductionPage from './pages/IntroductionPage';
 import MyPage from './pages/MyPage';
 import SummaryReportPage from './pages/SummaryReportPage';
-
-const { isLoggedIn } = useAuth();
 
 const router = createBrowserRouter([
   {
@@ -24,7 +21,7 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: (
-          <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/">
+          <ProtectedRoute authority="nonMemberOnly" redirectPath="/">
             <LoginPage />
           </ProtectedRoute>
         ),
@@ -32,7 +29,7 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: (
-          <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/">
+          <ProtectedRoute authority="nonMemberOnly" redirectPath="/">
             <RegisterPage />
           </ProtectedRoute>
         ),
@@ -42,7 +39,7 @@ const router = createBrowserRouter([
       {
         path: '/mypage/:email',
         element: (
-          <ProtectedRoute isAllowed={isLoggedIn} redirectPath="/">
+          <ProtectedRoute authority="memberOnly" redirectPath="/">
             <MyPage />
           </ProtectedRoute>
         ),
@@ -50,7 +47,7 @@ const router = createBrowserRouter([
       {
         path: '/summary/:scanId',
         element: (
-          <ProtectedRoute isAllowed={isLoggedIn} redirectPath="/">
+          <ProtectedRoute authority="memberOnly" redirectPath="/">
             <SummaryReportPage />
           </ProtectedRoute>
         ),

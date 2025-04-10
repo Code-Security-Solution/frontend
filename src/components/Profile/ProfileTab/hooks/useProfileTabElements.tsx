@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 import { IoMdPerson } from 'react-icons/io';
 import { FiLogOut } from 'react-icons/fi';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 export interface ProfileTabElementContent {
   icon: React.ReactNode;
@@ -15,15 +16,12 @@ export interface ProfileTabElement {
 
 const useProfileTabElements = () => {
   const navigate = useNavigate();
+  const { logout, userInfo } = useAuthStore();
 
   const handleClickMyPageMenu = () => {
-    const userEmail: string = JSON.parse(localStorage.getItem('userInfo')!).email;
-    navigate(`/mypage/${userEmail}`);
-  };
+    if (!userInfo) return;
 
-  const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    navigate('/');
+    navigate(`/mypage/${userInfo.email}`);
   };
 
   const profileTabElements: ProfileTabElement[] = [
@@ -35,7 +33,7 @@ const useProfileTabElements = () => {
     {
       elementId: 'logoutButton',
       content: { icon: <FiLogOut size={20} />, text: '로그아웃' },
-      handleClick: handleLogout,
+      handleClick: logout,
     },
   ];
 
