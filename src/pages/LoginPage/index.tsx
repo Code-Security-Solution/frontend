@@ -44,7 +44,7 @@ const LoginPage = () => {
           <S.LoginFormTitle>로그인</S.LoginFormTitle>
           <S.LoginFormDescription>로그인 하면 이전에 분석한 기록을 볼 수 있어요.</S.LoginFormDescription>
         </S.LoginFormHeader>
-        <Input id="email" type="email" label="이메일" value={email} handleChange={handleChangeEmail} />
+        <Input id="email" type="email" label="이메일" value={email} handleChange={handleChangeEmail} autoFocus />
         <Input id="password" type="password" label="비밀번호" value={password} handleChange={handleChangePassword} />
         <Button styleType="secondary" onClick={handleClickLogin}>
           로그인
