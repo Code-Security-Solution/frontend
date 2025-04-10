@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ProfileTabContainer = styled.section`
   position: absolute;
-  top: 3rem;
+  top: 4rem;
   right: 0;
 
   display: flex;
