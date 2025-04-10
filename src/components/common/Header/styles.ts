@@ -25,18 +25,25 @@ export const NavBarContainer = styled.nav`
   display: flex;
   gap: 1.6rem;
   align-items: center;
+  height: 100%;
 `;
 
 export const MenuList = styled.ul`
   display: flex;
   gap: 1.6rem;
   align-items: center;
+
+  height: 100%;
+
   list-style: none;
 `;
 
 export const MenuWrapper = styled.li`
   cursor: pointer;
   ${({ theme }) => theme.fonts.mediumBody}
+  display: flex;
+  align-items: center;
+  height: 100%;
 `;
 
 export const LoginButton = styled(Button)`
