@@ -7,7 +7,7 @@ export interface PostFileUploadRequest {
 }
 
 export interface PostFileUploadResult {
-  file_id: string;
+  scan_id: string;
   uploaded_files: string[];
 }
 
