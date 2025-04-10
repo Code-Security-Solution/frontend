@@ -3,7 +3,7 @@ import { SemgrepJsonRootObject } from './semgrepSchema';
 import theme from '@/styles/theme';
 
 export interface PostFileUploadRequest {
-  files: string[];
+  files: File[];
 }
 
 export interface PostFileUploadResult {
