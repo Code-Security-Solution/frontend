@@ -1,6 +1,6 @@
 import Input from '@/components/common/Input';
 import * as S from './styles';
-import { useState } from 'react';
+import { KeyboardEvent, useState } from 'react';
 import Button from '@/components/common/Button';
 import { useNavigate } from 'react-router-dom';
 import { formDropVarients } from '@/styles/motion';
@@ -32,9 +32,13 @@ const LoginPage = () => {
     }
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') handleClickLogin();
+  };
+
   return (
     <S.LoginPageContainer>
-      <S.LoginForm variants={formDropVarients} initial="hidden" animate="visible">
+      <S.LoginForm onKeyDown={handleKeyDown} variants={formDropVarients} initial="hidden" animate="visible">
         <S.LoginFormHeader>
           <S.LoginFormTitle>로그인</S.LoginFormTitle>
           <S.LoginFormDescription>로그인 하면 이전에 분석한 기록을 볼 수 있어요.</S.LoginFormDescription>
