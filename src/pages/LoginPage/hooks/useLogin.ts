@@ -12,6 +12,13 @@ const useLogin = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  const isFormValid = email.trim().length > 0 && password.trim().length > 0;
+
+  const validateForm = () => {
+    if (!email.trim()) setEmailError('이메일을 입력해주세요.');
+    if (!password.trim()) setPasswordError('비밀번호를 입력해주세요.');
+  };
+
   const handleChangeEmail = (value: string) => {
     setEmail(value);
 
@@ -28,13 +35,6 @@ const useLogin = () => {
 
   const handleClickToggleRegister = () => {
     navigate('/register');
-  };
-
-  const isFormValid = email.trim().length > 0 && password.trim().length > 0;
-
-  const validateForm = () => {
-    if (!email.trim()) setEmailError('이메일을 입력해주세요.');
-    if (!password.trim()) setPasswordError('비밀번호를 입력해주세요.');
   };
 
   const handleClickLogin = () => {
