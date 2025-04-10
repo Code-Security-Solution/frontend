@@ -2,10 +2,40 @@ import * as S from './styles';
 import { FaFileCode, FaTimes } from 'react-icons/fa';
 import useFileUpload from './hooks/useFileUpload';
 import UndraggableWrapper from '@/components/common/UndraggableWrapper';
+import { useMutation } from '@tanstack/react-query';
+import { postFileUpload } from '@/api/semgrep';
 
 const LandingPage = () => {
   const { files, isDragging, fileInputRef, handleFileInputChange, handleClickFileInput, handleDeleteFile } =
     useFileUpload();
+
+  const { mutate: mutateFileUpload, isPending } = useMutation({
+    mutationFn: async () => {
+      await postFileUpload({ files });
+    },
+    mutationKey: ['fileUpload'],
+    onSuccess: (data) => {
+      console.log('File upload success:', data);
+    },
+    onError: (error) => {
+      console.error('File upload error:', error);
+    },
+  });
+
+  const safeHandleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isPending) return;
+    handleFileInputChange(e);
+  };
+
+  const safeHandleClickFileInput = () => {
+    if (isPending) return;
+    handleClickFileInput();
+  };
+
+  const safeHandleDeleteFile = (file: File) => {
+    if (isPending) return;
+    handleDeleteFile(file);
+  };
 
   return (
     <>
@@ -22,7 +52,7 @@ const LandingPage = () => {
                     {files.map((file, index) => (
                       <S.FileItem key={`${file.name}_${index}`}>
                         {file.name}
-                        <S.DeleteFileButton onClick={() => handleDeleteFile(file)}>
+                        <S.DeleteFileButton onClick={() => safeHandleDeleteFile(file)}>
                           <FaTimes size={24} />
                         </S.DeleteFileButton>
                       </S.FileItem>
@@ -31,15 +61,26 @@ const LandingPage = () => {
                 </S.UploadedFileContainer>
               </>
             )}
-            <S.FileInput type="file" multiple={true} ref={fileInputRef} onChange={handleFileInputChange} />
-            <S.DashBorderBox $isFileSelected={files.length > 0} onClick={handleClickFileInput}>
+            <S.FileInput
+              type="file"
+              multiple={true}
+              ref={fileInputRef}
+              onChange={safeHandleFileInputChange}
+              disabled={isPending}
+            />
+            <S.DashBorderBox $isFileSelected={files.length > 0} onClick={safeHandleClickFileInput}>
               <FaFileCode size={48} />
               <UndraggableWrapper>
                 <S.EmptyFileMessage>클릭하거나 드래그해서 파일을 선택해 보세요</S.EmptyFileMessage>
               </UndraggableWrapper>
             </S.DashBorderBox>
           </S.EmptyFileContainer>
-          <S.SubmitButton styleType="primary" $isVisible={files.length > 0}>
+          <S.SubmitButton
+            styleType="primary"
+            isLoading={isPending}
+            $isVisible={files.length > 0}
+            onClick={() => mutateFileUpload()}
+          >
             코드 분석
           </S.SubmitButton>
         </S.FileUploadForm>
