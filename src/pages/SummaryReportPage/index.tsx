@@ -3,13 +3,14 @@ import { FaRegQuestionCircle } from 'react-icons/fa';
 import { HiOutlineDownload } from 'react-icons/hi';
 
 import * as S from './styles';
-import Dropdown from '@/components/common/Dropdown';
+import Dropdown, { DropdownItem } from '@/components/common/Dropdown';
 import Tooltip from '@/components/common/Tooltip';
 import VulnerabilityItem from './components/VulnerabilityItem';
 import SeverityChart from './components/SeverityChart';
 import FileVulnerabilityList from './components/FileVulnerabilityList';
 import useGetSummaryReport from './hooks/useGetSummaryReport';
-import useFilterSummaryReport from './hooks/useFilterSummaryReport';
+import useFilterSummaryReport from './hooks/useSummaryReportData';
+import useSummaryReportFilter from './hooks/useSummaryReportFilter';
 
 const SummaryReportPage = () => {
   const scanId = useParams().scanId;
@@ -19,6 +20,7 @@ const SummaryReportPage = () => {
   if (!summaryReport) return null;
 
   const { fileVulnerabilities, groupedBySeverity, severityChartData } = useFilterSummaryReport({ summaryReport });
+  const { dropdownFilterList, selectedFilter, handleSelectDropdownItem } = useSummaryReportFilter();
 
   return (
     <S.SummaryReportPageContainer>
@@ -40,14 +42,7 @@ const SummaryReportPage = () => {
               <FaRegQuestionCircle size={20} />
             </Tooltip>
           </S.HeaderTitleContainer>
-          <Dropdown
-            items={[
-              { text: '심각도별 보기', value: '심각도별 보기' },
-              { text: '취약점 패턴별 보기', value: '취약점 패턴별 보기' },
-            ]}
-            selectedItem={{ text: '심각도별 보기', value: '심각도별 보기' }}
-            handleSelect={(item) => console.log(item)}
-          />
+          <Dropdown items={dropdownFilterList} selectedItem={selectedFilter} handleSelect={handleSelectDropdownItem} />
           <S.ReportDownloadButton>
             <HiOutlineDownload size={20} />
             <S.ReportDownloadText>JSON 형식으로 다운로드</S.ReportDownloadText>
