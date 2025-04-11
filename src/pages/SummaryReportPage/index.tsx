@@ -6,24 +6,49 @@ import * as S from './styles';
 import Dropdown from '@/components/common/Dropdown';
 import Tooltip from '@/components/common/Tooltip';
 import VulnerabilityItem from './components/VulnerabilityItem';
-import { groupedBySeverity } from './mock/groupedBySeverity';
-import { DUMMY_DATA, fileVulnerabilities } from './mock/mockdata';
 import SeverityChart from './components/SeverityChart';
-import { getSeverityColors, Severity } from '@/types/semgrep';
+import { getSeverityColors, Severity, SummaryReport } from '@/types/semgrep';
 import FileVulnerabilityList from './components/FileVulnerabilityList';
-
-const severityOrder: Severity[] = ['critical', 'error', 'warning', 'info'];
-
-const severityChartData = Object.entries(DUMMY_DATA.severitySummary).map(([severity, count]) => ({
-  severity: severity as Severity,
-  count,
-  color: getSeverityColors()[severity as Severity],
-}));
+import { useQuery } from '@tanstack/react-query';
+import { getSummaryReport } from '@/api/semgrep';
 
 const SummaryReportPage = () => {
-  // TODO: scanId로 API 호출하여 데이터 가져오기
   const scanId = useParams().scanId;
-  console.log('scanId', scanId);
+  if (!scanId) return null;
+
+  const { data: summaryReport } = useQuery({
+    queryKey: ['summaryReport'],
+    queryFn: async () => await getSummaryReport({ scan_id: scanId }),
+    staleTime: 60 * 60 * 1000,
+  });
+
+  if (!summaryReport) return null;
+
+  const fileVulnerabilities = summaryReport.scannedFiles.map((file) => {
+    return {
+      filename: file,
+      count: summaryReport.vulnerabilities.filter((vuln) => vuln.file === file).length,
+    };
+  });
+
+  const severityOrder: Severity[] = ['critical', 'error', 'warning', 'info'];
+
+  const groupedBySeverity = summaryReport.vulnerabilities.reduce<Record<Severity, SummaryReport['vulnerabilities']>>(
+    (acc, vuln) => {
+      if (!acc[vuln.severity]) {
+        acc[vuln.severity] = [];
+      }
+      acc[vuln.severity].push(vuln);
+      return acc;
+    },
+    {} as Record<Severity, SummaryReport['vulnerabilities']>,
+  );
+
+  const severityChartData = Object.entries(summaryReport.severitySummary).map(([severity, count]) => ({
+    severity: severity as Severity,
+    count,
+    color: getSeverityColors()[severity as Severity],
+  }));
 
   return (
     <S.SummaryReportPageContainer>
@@ -40,7 +65,7 @@ const SummaryReportPage = () => {
       <S.SummaryReportContainer>
         <S.SummaryReportHeader>
           <S.HeaderTitleContainer>
-            <S.HeaderTitle>{DUMMY_DATA.totalVulnerabilities}개의 취약점 발견</S.HeaderTitle>
+            <S.HeaderTitle>{summaryReport.totalVulnerabilities}개의 취약점 발견</S.HeaderTitle>
             <Tooltip message="각 취약점 항목을 클릭하면 상세 정보를 볼 수 있어요." position="bottom">
               <FaRegQuestionCircle size={20} />
             </Tooltip>

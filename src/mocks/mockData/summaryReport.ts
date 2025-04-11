@@ -1,6 +1,6 @@
 import { SummaryReport } from '@/types/semgrep';
 
-export const DUMMY_DATA: SummaryReport = {
+export const MOCK_SUMMARY_REPORT: SummaryReport = {
   user_id: 'user123',
   analyzed_at: new Date(),
   scannedFiles: [
@@ -136,10 +136,3 @@ export const DUMMY_DATA: SummaryReport = {
     },
   ],
 };
-
-export const fileVulnerabilities = DUMMY_DATA.scannedFiles.map((file) => {
-  return {
-    filename: file,
-    count: DUMMY_DATA.vulnerabilities.filter((vuln) => vuln.file === file).length,
-  };
-});
