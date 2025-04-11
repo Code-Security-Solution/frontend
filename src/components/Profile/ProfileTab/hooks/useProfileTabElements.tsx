@@ -24,6 +24,11 @@ const useProfileTabElements = () => {
     navigate(`/mypage/${userInfo.email}`);
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   const profileTabElements: ProfileTabElement[] = [
     {
       elementId: 'reviewLinkControlButton',
@@ -33,7 +38,7 @@ const useProfileTabElements = () => {
     {
       elementId: 'logoutButton',
       content: { icon: <FiLogOut size={20} />, text: '로그아웃' },
-      handleClick: logout,
+      handleClick: handleLogout,
     },
   ];
 
