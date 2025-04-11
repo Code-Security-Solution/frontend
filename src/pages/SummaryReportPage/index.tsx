@@ -3,16 +3,22 @@ import { FaRegQuestionCircle } from 'react-icons/fa';
 import { HiOutlineDownload } from 'react-icons/hi';
 
 import * as S from './styles';
-import Dropdown from '@/components/common/Dropdown';
+import Dropdown, { DropdownItem } from '@/components/common/Dropdown';
 import Tooltip from '@/components/common/Tooltip';
 import VulnerabilityItem from './components/VulnerabilityItem';
 import SeverityChart from './components/SeverityChart';
 import FileVulnerabilityList from './components/FileVulnerabilityList';
 import useGetSummaryReport from './hooks/useGetSummaryReport';
 import useFilterSummaryReport from './hooks/useSummaryReportData';
-import useSummaryReportFilter from './hooks/useSummaryReportFilter';
+import { useState } from 'react';
+
+const dropdownFilterList: DropdownItem[] = [
+  { text: '심각도별 보기', value: 'orderBySeverity' },
+  { text: '취약점 패턴별 보기', value: 'orderByPattern' },
+];
 
 const SummaryReportPage = () => {
+  const [selectedFilter, setSelectedFilter] = useState<DropdownItem>(dropdownFilterList[0]);
   const scanId = useParams().scanId;
   if (!scanId) return null;
 
@@ -20,7 +26,10 @@ const SummaryReportPage = () => {
   if (!summaryReport) return null;
 
   const { fileVulnerabilities, groupedBySeverity, severityChartData } = useFilterSummaryReport({ summaryReport });
-  const { dropdownFilterList, selectedFilter, handleSelectDropdownItem } = useSummaryReportFilter();
+
+  const handleSelectDropdownItem = (value: DropdownItem) => {
+    setSelectedFilter(value);
+  };
 
   return (
     <S.SummaryReportPageContainer>
