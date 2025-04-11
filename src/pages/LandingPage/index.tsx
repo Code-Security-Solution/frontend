@@ -4,18 +4,23 @@ import useFileUpload from './hooks/useFileUpload';
 import UndraggableWrapper from '@/components/common/UndraggableWrapper';
 import { useMutation } from '@tanstack/react-query';
 import { postFileUpload } from '@/api/semgrep';
+import { useNavigate } from 'react-router-dom';
+import { PostFileUploadResult } from '@/types/semgrep';
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   const { files, isDragging, fileInputRef, handleFileInputChange, handleClickFileInput, handleDeleteFile } =
     useFileUpload();
 
   const { mutate: mutateFileUpload, isPending } = useMutation({
     mutationFn: async () => {
-      await postFileUpload({ files });
+      return await postFileUpload({ files });
     },
     mutationKey: ['fileUpload'],
     onSuccess: (data) => {
-      console.log('File upload success:', data);
+      const scanId = (data.result as PostFileUploadResult).scan_id;
+      console.log('File analyze success:', data);
+      navigate(`/summary/${scanId}`);
     },
     onError: (error) => {
       console.error('File upload error:', error);

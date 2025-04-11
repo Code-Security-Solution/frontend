@@ -1,30 +1,37 @@
 import generateFormData from '@/utils/generateFormData';
 import { endpoint } from './endpoints';
 import { publicAxios } from '@/utils/axios';
-import { PostFileUploadRequest, PostFileUploadResponse } from '@/types/semgrep';
+import {
+  GetSummaryReportResponse,
+  PostFileUploadRequest,
+  PostFileUploadResponse,
+  SummaryReport,
+} from '@/types/semgrep';
 
-export const postFileUpload = async (data: PostFileUploadRequest) => {
-  const formData = generateFormData(data);
+export const postFileUpload = async (requestData: PostFileUploadRequest) => {
+  const formData = generateFormData(requestData);
 
-  return await publicAxios.post<PostFileUploadResponse>(endpoint.semgrep.POST_FILE_UPLOAD, formData, {
+  const { data } = await publicAxios.post<PostFileUploadResponse>(endpoint.semgrep.POST_FILE_UPLOAD, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
+  return data;
 };
 
 interface GetTotalReportParams {
-  file_id: string;
+  scan_id: string;
 }
 
-export const getTotalReport = async ({ file_id }: GetTotalReportParams) => {
-  return await publicAxios.get(endpoint.semgrep.GET_TOTAL_REPORT(file_id));
+export const getTotalReport = async ({ scan_id }: GetTotalReportParams) => {
+  return await publicAxios.get(endpoint.semgrep.GET_TOTAL_REPORT(scan_id));
 };
 
 interface GetSummaryReportParams {
-  file_id: string;
+  scan_id: string;
 }
 
-export const getSummaryReport = async ({ file_id }: GetSummaryReportParams) => {
-  return await publicAxios.get(endpoint.semgrep.GET_SUMMARY_REPORT(file_id));
+export const getSummaryReport = async ({ scan_id }: GetSummaryReportParams) => {
+  const { data } = await publicAxios.get<GetSummaryReportResponse>(endpoint.semgrep.GET_SUMMARY_REPORT(scan_id));
+  return data.result as SummaryReport;
 };
