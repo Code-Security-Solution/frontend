@@ -16,6 +16,7 @@ const router = createBrowserRouter([
       // 모두 접근 가능한 페이지
       { index: true, element: <LandingPage /> },
       { path: '/introduction', element: <IntroductionPage /> },
+      { path: '/summary/:scanId', element: <SummaryReportPage /> },
 
       // 로그인 안 한 사용자만 접근 가능한 페이지
       {
@@ -41,14 +42,6 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute authority="memberOnly" redirectPath="/">
             <MyPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: '/summary/:scanId',
-        element: (
-          <ProtectedRoute authority="memberOnly" redirectPath="/">
-            <SummaryReportPage />
           </ProtectedRoute>
         ),
       },
