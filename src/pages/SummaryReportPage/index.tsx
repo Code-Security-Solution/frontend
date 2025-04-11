@@ -7,48 +7,18 @@ import Dropdown from '@/components/common/Dropdown';
 import Tooltip from '@/components/common/Tooltip';
 import VulnerabilityItem from './components/VulnerabilityItem';
 import SeverityChart from './components/SeverityChart';
-import { getSeverityColors, Severity, SummaryReport } from '@/types/semgrep';
 import FileVulnerabilityList from './components/FileVulnerabilityList';
-import { useQuery } from '@tanstack/react-query';
-import { getSummaryReport } from '@/api/semgrep';
+import useGetSummaryReport from './hooks/useGetSummaryReport';
+import useFilterSummaryReport from './hooks/useFilterSummaryReport';
 
 const SummaryReportPage = () => {
   const scanId = useParams().scanId;
   if (!scanId) return null;
 
-  const { data: summaryReport } = useQuery({
-    queryKey: ['summaryReport'],
-    queryFn: async () => await getSummaryReport({ scan_id: scanId }),
-    staleTime: 60 * 60 * 1000,
-  });
-
+  const { summaryReport } = useGetSummaryReport({ scanId });
   if (!summaryReport) return null;
 
-  const fileVulnerabilities = summaryReport.scannedFiles.map((file) => {
-    return {
-      filename: file,
-      count: summaryReport.vulnerabilities.filter((vuln) => vuln.file === file).length,
-    };
-  });
-
-  const severityOrder: Severity[] = ['critical', 'error', 'warning', 'info'];
-
-  const groupedBySeverity = summaryReport.vulnerabilities.reduce<Record<Severity, SummaryReport['vulnerabilities']>>(
-    (acc, vuln) => {
-      if (!acc[vuln.severity]) {
-        acc[vuln.severity] = [];
-      }
-      acc[vuln.severity].push(vuln);
-      return acc;
-    },
-    {} as Record<Severity, SummaryReport['vulnerabilities']>,
-  );
-
-  const severityChartData = Object.entries(summaryReport.severitySummary).map(([severity, count]) => ({
-    severity: severity as Severity,
-    count,
-    color: getSeverityColors()[severity as Severity],
-  }));
+  const { fileVulnerabilities, groupedBySeverity, severityChartData } = useFilterSummaryReport({ summaryReport });
 
   return (
     <S.SummaryReportPageContainer>
@@ -84,13 +54,10 @@ const SummaryReportPage = () => {
           </S.ReportDownloadButton>
         </S.SummaryReportHeader>
         <S.SummaryReportContent>
-          {severityOrder.map((severity) => {
-            const vulns = groupedBySeverity[severity];
-            if (!vulns) return null;
-
+          {groupedBySeverity.map((group, idx) => {
             return (
-              <S.VulnerabilityItemContainer key={severity}>
-                {vulns.map((vuln) => (
+              <S.VulnerabilityItemContainer key={`severity_${idx}`}>
+                {group.map((vuln) => (
                   <VulnerabilityItem
                     key={vuln.id}
                     file={vuln.file}
