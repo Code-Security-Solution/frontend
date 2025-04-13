@@ -5,7 +5,6 @@ import { HiOutlineDownload } from 'react-icons/hi';
 import * as S from './styles';
 import Dropdown, { DropdownItem } from '@/components/common/Dropdown';
 import Tooltip from '@/components/common/Tooltip';
-import VulnerabilityItem from './components/VulnerabilityItem';
 import SeverityChart from './components/SeverityChart';
 import FileVulnerabilityList from './components/FileVulnerabilityList';
 import useGetSummaryReport from './hooks/useGetSummaryReport';
