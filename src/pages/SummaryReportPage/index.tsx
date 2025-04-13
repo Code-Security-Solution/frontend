@@ -11,24 +11,38 @@ import FileVulnerabilityList from './components/FileVulnerabilityList';
 import useGetSummaryReport from './hooks/useGetSummaryReport';
 import useFilterSummaryReport from './hooks/useSummaryReportData';
 import { useState } from 'react';
+import { Vulnerability } from '@/types/semgrep';
+import VulnerabilityList from './components/VulnerabilityList';
 
-const dropdownFilterList: DropdownItem[] = [
-  { text: '심각도별 보기', value: 'orderBySeverity' },
-  { text: '취약점 패턴별 보기', value: 'orderByPattern' },
+export type VulnerabilityFilter = 'groupBySeverity' | 'groupByType';
+
+export const dropdownFilterList: DropdownItem<VulnerabilityFilter>[] = [
+  { text: '심각도별 보기', value: 'groupBySeverity' },
+  { text: '취약점 유형별 보기', value: 'groupByType' },
 ];
 
 const SummaryReportPage = () => {
-  const [selectedFilter, setSelectedFilter] = useState<DropdownItem>(dropdownFilterList[0]);
+  const [selectedFilterItem, setSelectedFilterItem] = useState<DropdownItem<VulnerabilityFilter>>(
+    dropdownFilterList[0],
+  );
+
   const scanId = useParams().scanId;
   if (!scanId) return null;
 
   const { summaryReport } = useGetSummaryReport({ scanId });
   if (!summaryReport) return null;
 
-  const { fileVulnerabilities, groupedBySeverity, severityChartData } = useFilterSummaryReport({ summaryReport });
+  const { fileVulnerabilities, groupedBySeverity, groupedByType, severityChartData } = useFilterSummaryReport({
+    summaryReport,
+  });
 
-  const handleSelectDropdownItem = (value: DropdownItem) => {
-    setSelectedFilter(value);
+  const vulnerabilityDataMap: Record<VulnerabilityFilter, Vulnerability[][]> = {
+    groupBySeverity: groupedBySeverity,
+    groupByType: groupedByType,
+  };
+
+  const handleSelectDropdownItem = (item: DropdownItem<VulnerabilityFilter>) => {
+    setSelectedFilterItem(item);
   };
 
   return (
@@ -51,29 +65,18 @@ const SummaryReportPage = () => {
               <FaRegQuestionCircle size={20} />
             </Tooltip>
           </S.HeaderTitleContainer>
-          <Dropdown items={dropdownFilterList} selectedItem={selectedFilter} handleSelect={handleSelectDropdownItem} />
+          <Dropdown
+            items={dropdownFilterList}
+            selectedItem={selectedFilterItem}
+            handleSelect={handleSelectDropdownItem}
+          />
           <S.ReportDownloadButton>
             <HiOutlineDownload size={20} />
             <S.ReportDownloadText>JSON 형식으로 다운로드</S.ReportDownloadText>
           </S.ReportDownloadButton>
         </S.SummaryReportHeader>
         <S.SummaryReportContent>
-          {groupedBySeverity.map((group, idx) => {
-            return (
-              <S.VulnerabilityItemContainer key={`severity_${idx}`}>
-                {group.map((vuln) => (
-                  <VulnerabilityItem
-                    key={vuln.id}
-                    file={vuln.file}
-                    line={vuln.line}
-                    column={vuln.column}
-                    message={vuln.message}
-                    severity={vuln.severity}
-                  />
-                ))}
-              </S.VulnerabilityItemContainer>
-            );
-          })}
+          <VulnerabilityList data={vulnerabilityDataMap[selectedFilterItem.value]} />
         </S.SummaryReportContent>
       </S.SummaryReportContainer>
     </S.SummaryReportPageContainer>

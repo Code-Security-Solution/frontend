@@ -39,7 +39,7 @@ interface SeveritySummary {
   info: number;
 }
 
-interface Vulnerability {
+export interface Vulnerability {
   id: string;
   file: string;
   line: number;
