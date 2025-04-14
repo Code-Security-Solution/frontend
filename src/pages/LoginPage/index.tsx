@@ -11,6 +11,7 @@ const LoginPage = () => {
     password,
     emailError,
     passwordError,
+    loginFormError,
     handleChangeEmail,
     handleChangePassword,
     handleClickLogin,
@@ -45,6 +46,7 @@ const LoginPage = () => {
           errorMessage={passwordError}
           handleChange={handleChangePassword}
         />
+        {loginFormError && <S.LoginFormErrorMessage>{loginFormError}</S.LoginFormErrorMessage>}
         <Button styleType="secondary" onClick={handleClickLogin}>
           로그인
         </Button>
