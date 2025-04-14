@@ -8,7 +8,7 @@ export const endpoint = {
     GET_DOWNLOAD_ALL_SOURCE_CODE: (scanId: string) => `/download-all-sources/${scanId}`,
     GET_DOWNLOAD_TRANSLATED_SCAN_RESULT: (scanId: string) => `/download-translated-result/${scanId}`,
   },
-  user: {
+  users: {
     POST_REGISTER: '/register',
     POST_LOGIN: '/login',
     GET_USER_PROFILE: '/user/me',
