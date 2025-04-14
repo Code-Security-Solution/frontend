@@ -3,11 +3,11 @@ import * as S from './styles';
 import LogoIcon from '@/assets/Logo.svg';
 import ProfileInfo from '@/components/Profile/ProfileInfo';
 import UndraggableWrapper from '../UndraggableWrapper';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useUserInfoStore } from '@/stores/useUserInfoStore';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, userInfo } = useAuthStore();
+  const { isAuthenticated, userInfo } = useUserInfoStore();
 
   const handleClickLogoIcon = () => {
     navigate('/');

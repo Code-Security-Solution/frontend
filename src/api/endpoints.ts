@@ -11,7 +11,7 @@ export const endpoint = {
   users: {
     POST_REGISTER: '/register',
     POST_LOGIN: '/login',
-    GET_USER_PROFILE: '/user/me',
+    GET_USER_INFO: '/user/me',
     GET_USER_SCAN_HISTORY: '/my-files',
   },
 };

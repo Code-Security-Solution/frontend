@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { PropsWithChildren, useEffect, useState } from 'react';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useUserInfoStore } from '@/stores/useUserInfoStore';
 import DimmedLoadingPage from '@/pages/LoadingPage/DimmedLoadingPage';
 
 interface ProtectedRouteProps {
@@ -10,7 +10,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ authority, redirectPath, children }: PropsWithChildren<ProtectedRouteProps>) => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated } = useUserInfoStore();
   const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {

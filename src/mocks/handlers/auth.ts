@@ -1,5 +1,6 @@
+import { endpoint } from '@/api/endpoints';
 import {
-  GetUserProfileResponse,
+  GetUserInfoResponse,
   PostLoginRequest,
   PostLoginResponse,
   PostRegisterRequest,
@@ -7,9 +8,13 @@ import {
 } from '@/types/users';
 import { http, HttpResponse } from 'msw';
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 const postRegister = () =>
-  http.post('/register', async ({ request }) => {
+  http.post(`${baseURL}${endpoint.users.POST_REGISTER}`, async ({ request }) => {
     const requestBody = (await request.json()) as PostRegisterRequest;
+
+    const { email, password, username } = requestBody;
 
     const adminData: PostRegisterRequest = {
       email: 'admin@email.com',
@@ -17,7 +22,7 @@ const postRegister = () =>
       username: 'admin',
     };
 
-    if (requestBody === adminData) {
+    if (email === adminData.email && password === adminData.password && username === adminData.username) {
       const response: PostRegisterResponse = {
         status: 200,
         message: '회원가입 성공',
@@ -40,15 +45,17 @@ const postRegister = () =>
   });
 
 const postLogin = () =>
-  http.post('/login', async ({ request }) => {
+  http.post(`${baseURL}${endpoint.users.POST_LOGIN}`, async ({ request }) => {
     const requestBody = (await request.json()) as PostLoginRequest;
+
+    const { email, password } = requestBody;
 
     const adminData: PostLoginRequest = {
       email: 'admin@email.com',
       password: '1234',
     };
 
-    if (requestBody === adminData) {
+    if (email === adminData.email && password === adminData.password) {
       const response: PostLoginResponse = {
         status: 200,
         message: '로그인 성공',
@@ -70,10 +77,11 @@ const postLogin = () =>
   });
 
 const getUserProfile = () =>
-  http.get('/user/me', async () => {
-    const token = localStorage.getItem('access_token');
+  http.get(`${baseURL}${endpoint.users.GET_USER_INFO}`, async () => {
+    const token = localStorage.getItem('accessToken');
+
     if (!token) {
-      const errorResponse: GetUserProfileResponse = {
+      const errorResponse: GetUserInfoResponse = {
         status: 401,
         message: '유효하지 않은 토큰입니다.',
         result: {},
@@ -82,7 +90,7 @@ const getUserProfile = () =>
       return HttpResponse.json(errorResponse, { status: 401 });
     }
 
-    const response: GetUserProfileResponse = {
+    const response: GetUserInfoResponse = {
       status: 200,
       message: '사용자 정보 조회 성공',
       result: {
