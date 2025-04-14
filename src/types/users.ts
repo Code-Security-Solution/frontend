@@ -4,7 +4,7 @@ export interface PostRegisterRequest {
   username: string;
 }
 
-export interface UserInfoResult {
+export interface UserProfileResult {
   email: string;
   username: string;
 }
@@ -12,7 +12,7 @@ export interface UserInfoResult {
 export interface PostRegisterResponse {
   status: number;
   message: string;
-  result: UserInfoResult | {};
+  result: UserProfileResult | {};
 }
 
 export interface PostLoginRequest {
@@ -28,4 +28,10 @@ export interface PostLoginResponse {
   status: number;
   message: string;
   result: TokenResult | {};
+}
+
+export interface GetUserProfileResponse {
+  status: number;
+  message: string;
+  result: UserProfileResult | {};
 }

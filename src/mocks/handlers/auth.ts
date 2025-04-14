@@ -1,4 +1,10 @@
-import { PostLoginRequest, PostLoginResponse, PostRegisterRequest, PostRegisterResponse } from '@/types/users';
+import {
+  GetUserProfileResponse,
+  PostLoginRequest,
+  PostLoginResponse,
+  PostRegisterRequest,
+  PostRegisterResponse,
+} from '@/types/users';
 import { http, HttpResponse } from 'msw';
 
 const postRegister = () =>
@@ -63,6 +69,31 @@ const postLogin = () =>
     return HttpResponse.json(errorResponse, { status: 401 });
   });
 
-const authHandler = [postRegister(), postLogin()];
+const getUserProfile = () =>
+  http.get('/user/me', async () => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      const errorResponse: GetUserProfileResponse = {
+        status: 401,
+        message: '유효하지 않은 토큰입니다.',
+        result: {},
+      };
+
+      return HttpResponse.json(errorResponse, { status: 401 });
+    }
+
+    const response: GetUserProfileResponse = {
+      status: 200,
+      message: '사용자 정보 조회 성공',
+      result: {
+        email: 'admin@email.com',
+        username: 'admin',
+      },
+    };
+
+    return HttpResponse.json(response, { status: 200 });
+  });
+
+const authHandler = [postRegister(), postLogin(), getUserProfile()];
 
 export default authHandler;
