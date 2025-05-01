@@ -10,6 +10,7 @@ import SummaryReportPage from './pages/SummaryReportPage';
 import ErrorPage from './pages/ErrorPage';
 import { Suspense } from 'react';
 import DimmedLoadingPage from './pages/LoadingPage/DimmedLoadingPage';
+import ModalRenderer from './components/common/ModalRenderer';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<DimmedLoadingPage />}>
         <App />
+        <ModalRenderer />
       </Suspense>
     ),
     errorElement: <ErrorPage />,
