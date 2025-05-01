@@ -35,7 +35,7 @@ const postRegister = () =>
       return HttpResponse.json(response, { status: 200 });
     }
 
-    return HttpResponse.json({ error: '회원가입 실패' }, { status: 401 });
+    return HttpResponse.json({ error: '회원가입 실패(이미 존재하는 이메일)' }, { status: 400 });
   });
 
 const postLogin = () =>
