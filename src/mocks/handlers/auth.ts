@@ -35,13 +35,7 @@ const postRegister = () =>
       return HttpResponse.json(response, { status: 200 });
     }
 
-    const errorResponse: PostLoginResponse = {
-      status: 400,
-      message: '회원가입 실패',
-      result: {},
-    };
-
-    return HttpResponse.json(errorResponse, { status: 400 });
+    return HttpResponse.json({ error: '회원가입 실패' }, { status: 401 });
   });
 
 const postLogin = () =>
@@ -67,13 +61,7 @@ const postLogin = () =>
       return HttpResponse.json(response, { status: 200 });
     }
 
-    const errorResponse: PostLoginResponse = {
-      status: 401,
-      message: '로그인 실패',
-      result: {},
-    };
-
-    return HttpResponse.json(errorResponse, { status: 401 });
+    return HttpResponse.json({ error: '로그인 실패' }, { status: 401 });
   });
 
 const getUserProfile = () =>
@@ -81,13 +69,7 @@ const getUserProfile = () =>
     const token = localStorage.getItem('accessToken');
 
     if (!token) {
-      const errorResponse: GetUserInfoResponse = {
-        status: 401,
-        message: '유효하지 않은 토큰입니다.',
-        result: {},
-      };
-
-      return HttpResponse.json(errorResponse, { status: 401 });
+      return HttpResponse.json({ error: '토큰 에러' }, { status: 401 });
     }
 
     const response: GetUserInfoResponse = {
