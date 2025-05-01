@@ -6,6 +6,7 @@ const colors = {
   white: '#FFFFFF',
   primary: '#2196F3',
   error: '#ff0000',
+  modalBackground: `rgba(0, 0, 0, 0.25)`,
 
   // grayscale
   gray100: '#f3f4f6',
@@ -25,7 +26,8 @@ const colors = {
 };
 
 const zIndex = {
-  modal: 999,
+  overlay: 999,
+  modal: 1000,
   dropdown: 998,
   tooltip: 998,
 };
