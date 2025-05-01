@@ -4,15 +4,20 @@ import * as S from './styles';
 import useModalStore from '@/stores/useModalStore';
 
 interface ModalProps {
-  title?: string;
+  handleClose?: () => void;
 }
 
-const AlertModal = ({ children }: PropsWithChildren<ModalProps>) => {
+const AlertModal = ({ children, handleClose }: PropsWithChildren<ModalProps>) => {
   const { closeModal } = useModalStore();
 
   return (
     <>
-      <S.Overlay onClick={() => closeModal('alert')} />
+      <S.Overlay
+        onClick={() => {
+          handleClose && handleClose();
+          closeModal('alert');
+        }}
+      />
       <S.ModalContainer>{children}</S.ModalContainer>
     </>
   );

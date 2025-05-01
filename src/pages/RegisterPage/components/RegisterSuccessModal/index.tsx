@@ -14,7 +14,7 @@ const RegisterSuccessModal = ({ email }: RegisterSuccessModalProps) => {
   };
 
   return (
-    <AlertModal>
+    <AlertModal handleClose={handleNavigateLoginPage}>
       <S.ModalContainer>
         <S.Content>
           회원가입이 완료되었어요. <br />
