@@ -4,27 +4,35 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProtectedRoute from './components/ProtectedRoute';
-import useAuth from './hooks/useAuth';
 import IntroductionPage from './pages/IntroductionPage';
 import MyPage from './pages/MyPage';
 import SummaryReportPage from './pages/SummaryReportPage';
-
-const { isLoggedIn } = useAuth();
+import ErrorPage from './pages/ErrorPage';
+import { Suspense } from 'react';
+import DimmedLoadingPage from './pages/LoadingPage/DimmedLoadingPage';
+import ModalRenderer from './components/common/ModalRenderer';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <Suspense fallback={<DimmedLoadingPage />}>
+        <App />
+        <ModalRenderer />
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />,
     children: [
       // 모두 접근 가능한 페이지
       { index: true, element: <LandingPage /> },
       { path: '/introduction', element: <IntroductionPage /> },
+      { path: '/summary/:scanId', element: <SummaryReportPage /> },
 
       // 로그인 안 한 사용자만 접근 가능한 페이지
       {
         path: '/login',
         element: (
-          <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/">
+          <ProtectedRoute authority="nonMemberOnly" redirectPath="/">
             <LoginPage />
           </ProtectedRoute>
         ),
@@ -32,7 +40,7 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: (
-          <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/">
+          <ProtectedRoute authority="nonMemberOnly" redirectPath="/">
             <RegisterPage />
           </ProtectedRoute>
         ),
@@ -42,16 +50,8 @@ const router = createBrowserRouter([
       {
         path: '/mypage/:email',
         element: (
-          <ProtectedRoute isAllowed={isLoggedIn} redirectPath="/">
+          <ProtectedRoute authority="memberOnly" redirectPath="/">
             <MyPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: '/summary/:scanId',
-        element: (
-          <ProtectedRoute isAllowed={isLoggedIn} redirectPath="/">
-            <SummaryReportPage />
           </ProtectedRoute>
         ),
       },

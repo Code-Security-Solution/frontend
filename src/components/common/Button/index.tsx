@@ -2,8 +2,10 @@ import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import * as S from './styles';
 import LoadingSpinner from '../LoadingSpinner';
 
+export type ButtonStyleType = 'primary' | 'secondary' | 'disabled';
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  styleType: 'primary' | 'secondary' | 'disabled';
+  styleType: ButtonStyleType;
   isLoading?: boolean;
 }
 

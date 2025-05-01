@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router';
 import { IoMdPerson } from 'react-icons/io';
 import { FiLogOut } from 'react-icons/fi';
+import { useUserInfoStore } from '@/stores/useUserInfoStore';
+import { useAuthTokenStore } from '@/stores/useAuthTokenStore';
 
 export interface ProfileTabElementContent {
   icon: React.ReactNode;
@@ -15,14 +17,18 @@ export interface ProfileTabElement {
 
 const useProfileTabElements = () => {
   const navigate = useNavigate();
+  const { clearAccessToken } = useAuthTokenStore();
+  const { userInfo, clearUserInfo } = useUserInfoStore();
 
   const handleClickMyPageMenu = () => {
-    const userEmail: string = JSON.parse(localStorage.getItem('userInfo')!).email;
-    navigate(`/mypage/${userEmail}`);
+    if (!userInfo) return;
+
+    navigate(`/mypage/${userInfo.email}`);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('access_token');
+    clearAccessToken();
+    clearUserInfo();
     navigate('/');
   };
 

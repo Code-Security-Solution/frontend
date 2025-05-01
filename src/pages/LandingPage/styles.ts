@@ -15,7 +15,7 @@ export const DragOverlay = styled.div`
   pointer-events: none;
 
   position: fixed;
-  z-index: 999;
+  z-index: ${({ theme }) => theme.zIndex.modal};
   top: 0;
   left: 0;
 

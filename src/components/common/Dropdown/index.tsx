@@ -4,18 +4,18 @@ import useDropdown from '@/hooks/useDropdown';
 
 import * as S from './styles';
 
-export interface DropdownItem {
+export interface DropdownItem<T extends string = string> {
   text: string;
-  value: string | number;
+  value: T;
 }
 
-interface DropdownProps {
-  items: DropdownItem[];
-  selectedItem: DropdownItem;
-  handleSelect: (item: DropdownItem) => void;
+interface DropdownProps<T extends string = string> {
+  items: DropdownItem<T>[];
+  selectedItem: DropdownItem<T>;
+  handleSelect: (item: DropdownItem<T>) => void;
 }
 
-const Dropdown = ({ items, selectedItem, handleSelect }: DropdownProps) => {
+const Dropdown = <T extends string>({ items, selectedItem, handleSelect }: DropdownProps<T>) => {
   const { isOpened, handleDropdownButtonClick, handleOptionClick, dropdownRef } = useDropdown({ handleSelect });
 
   return (

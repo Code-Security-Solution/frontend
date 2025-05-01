@@ -84,17 +84,3 @@ export const SummaryReportContent = styled.div`
   gap: 1.6rem;
   width: 100%;
 `;
-
-export const VulnerabilityItemContainer = styled.ul`
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-  border: 0.1rem solid ${({ theme }) => theme.colors.gray200};
-  border-radius: 1rem;
-
-  & > :last-child > * {
-    border-bottom: none;
-  }
-`;

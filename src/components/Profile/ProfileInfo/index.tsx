@@ -11,8 +11,8 @@ const ProfileInfo = ({ email }: ProfileInfoProps) => {
   const { isOpened, containerRef, handleContainerClick } = useProfileTab();
 
   return (
-    <S.ProfileInfoSection ref={containerRef}>
-      <S.ProfileInfoContainer onClick={handleContainerClick}>
+    <S.ProfileInfoSection ref={containerRef} onClick={handleContainerClick}>
+      <S.ProfileInfoContainer>
         <S.ProfileEmail>{email}</S.ProfileEmail>
         <GoChevronDown size={20} />
       </S.ProfileInfoContainer>

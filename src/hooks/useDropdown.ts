@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 
 import { DropdownItem } from '@/components/common/Dropdown';
 
-interface UseDropdownProps {
-  handleSelect: (option: DropdownItem) => void;
+interface UseDropdownProps<T extends string = string> {
+  handleSelect: (option: DropdownItem<T>) => void;
 }
 
-const useDropdown = ({ handleSelect }: UseDropdownProps) => {
+const useDropdown = <T extends string = string>({ handleSelect }: UseDropdownProps<T>) => {
   const [isOpened, setIsOpened] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -15,7 +15,7 @@ const useDropdown = ({ handleSelect }: UseDropdownProps) => {
     setIsOpened((prev) => !prev);
   };
 
-  const handleOptionClick = (option: DropdownItem) => {
+  const handleOptionClick = (option: DropdownItem<T>) => {
     handleSelect(option);
     setIsOpened(false);
   };

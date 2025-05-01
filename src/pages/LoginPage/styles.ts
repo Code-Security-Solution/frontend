@@ -38,6 +38,11 @@ export const LoginFormDescription = styled.p`
   ${({ theme }) => theme.fonts.mediumBody};
 `;
 
+export const LoginFormErrorMessage = styled.p`
+  ${({ theme }) => theme.fonts.mediumBody};
+  color: ${({ theme }) => theme.colors.error};
+`;
+
 export const ToggleRegisterButton = styled.p`
   cursor: pointer;
   ${({ theme }) => theme.fonts.regularBody};

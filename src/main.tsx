@@ -18,13 +18,22 @@ const queryClient = new QueryClient({
   },
 });
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </ThemeProvider>
-  </StrictMode>,
-);
+const enableMockWorker = async () => {
+  if (import.meta.env.VITE_ENV === 'production') return;
+
+  const { worker } = await import('./mocks/browser');
+  worker.start();
+};
+
+enableMockWorker().then(() => {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </ThemeProvider>
+    </StrictMode>,
+  );
+});

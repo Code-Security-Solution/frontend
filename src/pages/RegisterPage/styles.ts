@@ -36,3 +36,8 @@ export const ToggleLoginButton = styled.p`
   ${({ theme }) => theme.fonts.regularBody};
   text-decoration: underline;
 `;
+
+export const RegisterFormErrorMessage = styled.p`
+  ${({ theme }) => theme.fonts.mediumBody};
+  color: ${({ theme }) => theme.colors.error};
+`;
