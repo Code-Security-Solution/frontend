@@ -44,12 +44,6 @@ const useRegister = () => {
     navigate('/login');
   };
 
-  const handleClickRegister = () => {
-    if (!isFormValid) return validateForm();
-
-    console.log('회원가입: ', { email, password, name });
-  };
-
   return {
     email,
     password,
@@ -57,11 +51,12 @@ const useRegister = () => {
     emailError,
     passwordError,
     nameError,
+    isFormValid,
     handleChangeEmail,
     handleChangePassword,
     handleChangeName,
     handleClickToggleLogin,
-    handleClickRegister,
+    validateForm,
   };
 };
 

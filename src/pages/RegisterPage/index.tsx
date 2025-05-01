@@ -3,6 +3,11 @@ import * as S from './styles';
 import Button from '@/components/common/Button';
 import { formDropVarients } from '@/styles/motion';
 import useRegister from './hooks/useRegister';
+import { useState } from 'react';
+import { ErrorResponse } from 'react-router-dom';
+import { postRegister } from '@/api/users';
+import RegisterSuccessModal from './components/RegisterSuccessModal';
+import useModalStore from '@/stores/useModalStore';
 
 const RegisterPage = () => {
   const {
@@ -12,12 +17,30 @@ const RegisterPage = () => {
     emailError,
     passwordError,
     nameError,
+    isFormValid,
     handleChangeEmail,
     handleChangePassword,
     handleChangeName,
     handleClickToggleLogin,
-    handleClickRegister,
+    validateForm,
   } = useRegister();
+
+  const [formErrorMessage, setFormErrorMessage] = useState('');
+  const { openModal } = useModalStore();
+
+  const handleClickRegister = async () => {
+    if (!isFormValid) return validateForm();
+
+    try {
+      await postRegister({ email, password, username: name });
+      setFormErrorMessage('');
+      openModal('alert', <RegisterSuccessModal email={email} />);
+    } catch (error) {
+      const status = (error as ErrorResponse).status;
+      if (status === 400) setFormErrorMessage('중복된 이메일이에요. 다시 확인해 주세요.');
+      else setFormErrorMessage('회원가입 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요.');
+    }
+  };
 
   return (
     <S.RegisterPageContainer>
@@ -47,6 +70,7 @@ const RegisterPage = () => {
           errorMessage={nameError}
           handleChange={handleChangeName}
         />
+        {formErrorMessage && <S.RegisterFormErrorMessage>{formErrorMessage}</S.RegisterFormErrorMessage>}
         <Button styleType="secondary" onClick={handleClickRegister}>
           회원가입
         </Button>
