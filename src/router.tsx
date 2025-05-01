@@ -7,11 +7,19 @@ import ProtectedRoute from './components/ProtectedRoute';
 import IntroductionPage from './pages/IntroductionPage';
 import MyPage from './pages/MyPage';
 import SummaryReportPage from './pages/SummaryReportPage';
+import ErrorPage from './pages/ErrorPage';
+import { Suspense } from 'react';
+import DimmedLoadingPage from './pages/LoadingPage/DimmedLoadingPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <Suspense fallback={<DimmedLoadingPage />}>
+        <App />
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />,
     children: [
       // 모두 접근 가능한 페이지
       { index: true, element: <LandingPage /> },
