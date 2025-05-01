@@ -1,9 +1,12 @@
 import Input from '@/components/common/Input';
 import * as S from './styles';
-import { KeyboardEvent } from 'react';
+import { KeyboardEvent, useState } from 'react';
 import Button from '@/components/common/Button';
 import { formDropVarients } from '@/styles/motion';
 import useLogin from './hooks/useLogin';
+import { useAuthTokenStore } from '@/stores/useAuthTokenStore';
+import { postLogin } from '@/api/users';
+import { ErrorResponse, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const {
@@ -11,12 +14,32 @@ const LoginPage = () => {
     password,
     emailError,
     passwordError,
-    loginFormError,
+    isFormValid,
     handleChangeEmail,
     handleChangePassword,
-    handleClickLogin,
     handleClickToggleRegister,
+    validateForm,
   } = useLogin();
+
+  const navigate = useNavigate();
+  const [loginFormError, setLoginFormError] = useState('');
+  const { setAccessToken } = useAuthTokenStore();
+
+  const handleClickLogin = async () => {
+    if (!isFormValid) return validateForm();
+
+    try {
+      const loginResult = await postLogin({ email, password });
+      if (loginResult?.token) {
+        setAccessToken(loginResult.token);
+        navigate('/');
+      }
+    } catch (error) {
+      const status = (error as ErrorResponse).status;
+      if (status === 401) setLoginFormError('아이디 또는 비밀번호를 확인해주세요.');
+      else setLoginFormError('로그인 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요.');
+    }
+  };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') handleClickLogin();

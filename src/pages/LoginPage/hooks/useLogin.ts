@@ -1,10 +1,8 @@
-import { useAuthStore } from '@/stores/useAuthStore';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const useLogin = () => {
   const navigate = useNavigate();
-  const { setAuthState } = useAuthStore();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,26 +35,16 @@ const useLogin = () => {
     navigate('/register');
   };
 
-  const handleClickLogin = () => {
-    if (!isFormValid) return validateForm();
-
-    // 테스트용 admin 로그인
-    if (email === 'admin' && password === '1234') {
-      alert('admin 로그인 성공');
-      setAuthState({ token: 'admin_token', userInfo: { email: 'admin@email.com' } });
-      navigate('/');
-    }
-  };
-
   return {
     email,
     password,
     emailError,
     passwordError,
+    isFormValid,
     handleChangeEmail,
     handleChangePassword,
     handleClickToggleRegister,
-    handleClickLogin,
+    validateForm,
   };
 };
 
