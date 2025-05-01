@@ -44,7 +44,7 @@ export const ArrowIcon = styled.div<DropdownStyleProps>`
 
 export const ItemContainer = styled.ul`
   position: absolute;
-  z-index: 998;
+  z-index: ${({ theme }) => theme.zIndex.dropdown};
   top: 100%;
 
   overflow: hidden;

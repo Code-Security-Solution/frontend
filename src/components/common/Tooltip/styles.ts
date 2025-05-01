@@ -16,7 +16,7 @@ export interface TooltipStyleProps {
 
 export const TooltipContent = styled.div<TooltipStyleProps>`
   position: absolute;
-  z-index: 998;
+  z-index: ${({ theme }) => theme.zIndex.tooltip};
 
   display: none;
 

@@ -24,6 +24,12 @@ const colors = {
   severity_info: '#00e39f',
 };
 
+const zIndex = {
+  modal: 999,
+  dropdown: 998,
+  tooltip: 998,
+};
+
 type FontType = 'title1' | 'title2' | 'subtitle' | 'mediumBody' | 'regularBody' | 'description';
 
 const fonts: Record<FontType, RuleSet> = {
@@ -60,10 +66,12 @@ const fonts: Record<FontType, RuleSet> = {
 };
 
 export type ColorsType = typeof colors;
+export type ZIndexType = typeof zIndex;
 export type FontsType = typeof fonts;
 
 const theme: DefaultTheme = {
   colors,
+  zIndex,
   fonts,
 };
 
