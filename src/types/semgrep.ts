@@ -1,6 +1,7 @@
 import { CSSProperties } from 'styled-components';
 import { SemgrepJsonRootObject } from './semgrepSchema';
 import theme from '@/styles/theme';
+import { ApiResponse } from './common';
 
 export interface PostFileUploadRequest {
   files: File[];
@@ -11,17 +12,9 @@ export interface PostFileUploadResult {
   uploaded_files: string[];
 }
 
-export interface PostFileUploadResponse {
-  status: number;
-  message: string;
-  result: PostFileUploadResult | {};
-}
+export type PostFileUploadResponse = ApiResponse<PostFileUploadRequest>;
 
-export interface GetTotalScanResultResponse {
-  status: number;
-  message: string;
-  result: SemgrepJsonRootObject | {};
-}
+export type GetTotalScanResultResponse = ApiResponse<SemgrepJsonRootObject>;
 
 export type Severity = 'critical' | 'error' | 'warning' | 'info';
 
@@ -58,8 +51,4 @@ export interface SummaryReport {
   vulnerabilities: Vulnerability[];
 }
 
-export interface GetSummaryReportResponse {
-  status: number;
-  message: string;
-  result: SummaryReport | {};
-}
+export type GetSummaryReportResponse = ApiResponse<SummaryReport>;
