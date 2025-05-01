@@ -22,7 +22,7 @@ const LoginPage = () => {
   } = useLogin();
 
   const navigate = useNavigate();
-  const [loginFormError, setLoginFormError] = useState('');
+  const [formErrorMessage, setFormErrorMessage] = useState('');
   const { setAccessToken } = useAuthTokenStore();
 
   const handleClickLogin = async () => {
@@ -36,8 +36,8 @@ const LoginPage = () => {
       }
     } catch (error) {
       const status = (error as ErrorResponse).status;
-      if (status === 401) setLoginFormError('아이디 또는 비밀번호를 확인해주세요.');
-      else setLoginFormError('로그인 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요.');
+      if (status === 401) setFormErrorMessage('아이디 또는 비밀번호를 확인해주세요.');
+      else setFormErrorMessage('로그인 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요.');
     }
   };
 
@@ -69,7 +69,7 @@ const LoginPage = () => {
           errorMessage={passwordError}
           handleChange={handleChangePassword}
         />
-        {loginFormError && <S.LoginFormErrorMessage>{loginFormError}</S.LoginFormErrorMessage>}
+        {formErrorMessage && <S.LoginFormErrorMessage>{formErrorMessage}</S.LoginFormErrorMessage>}
         <Button styleType="secondary" onClick={handleClickLogin}>
           로그인
         </Button>
