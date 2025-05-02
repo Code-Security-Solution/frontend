@@ -9,9 +9,11 @@ import SeverityChart from './components/SeverityChart';
 import FileVulnerabilityList from './components/FileVulnerabilityList';
 import useGetSummaryReport from './hooks/useGetSummaryReport';
 import useFilterSummaryReport from './hooks/useSummaryReportData';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Vulnerability } from '@/types/semgrep';
 import VulnerabilityList from './components/VulnerabilityList';
+import html2canvas from 'html2canvas';
+import { saveAs } from 'file-saver';
 
 export type VulnerabilityFilter = 'groupBySeverity' | 'groupByType';
 
@@ -21,6 +23,7 @@ export const dropdownFilterList: DropdownItem<VulnerabilityFilter>[] = [
 ];
 
 const SummaryReportPage = () => {
+  const reportRef = useRef<HTMLDivElement>(null);
   const [selectedFilterItem, setSelectedFilterItem] = useState<DropdownItem<VulnerabilityFilter>>(
     dropdownFilterList[0],
   );
@@ -44,8 +47,42 @@ const SummaryReportPage = () => {
     setSelectedFilterItem(item);
   };
 
+  const handleDownloadReportImage = async () => {
+    const original = reportRef.current;
+    if (!original) return;
+
+    try {
+      // 원본 div 클론
+      const clone = original.cloneNode(true) as HTMLElement;
+
+      // 화면에 보이지 않는 곳에 잠시 붙이기
+      clone.style.position = 'absolute';
+      clone.style.top = '-9999px';
+      clone.style.left = '-9999px';
+      clone.style.width = `${original.scrollWidth}px`;
+      clone.style.height = 'auto';
+      clone.style.overflow = 'visible';
+
+      // 페이지 body에 붙이기
+      document.body.appendChild(clone);
+
+      // 클론 캡쳐
+      const canvas = await html2canvas(clone, { scale: 2 });
+
+      // Blob 생성 및 다운로드
+      canvas.toBlob((blob) => {
+        if (blob) saveAs(blob, `${scanId}_summary_report.png`);
+      });
+
+      // 클론 제거
+      document.body.removeChild(clone);
+    } catch (error) {
+      console.error('Error downloading full report image:', error);
+    }
+  };
+
   return (
-    <S.SummaryReportPageContainer>
+    <S.SummaryReportPageContainer ref={reportRef}>
       <S.SummaryReportSideBar>
         <S.SeverityChartContainer>
           <S.SeverityChartTitle>심각도별 취약점 현황</S.SeverityChartTitle>
@@ -69,9 +106,9 @@ const SummaryReportPage = () => {
             selectedItem={selectedFilterItem}
             handleSelect={handleSelectDropdownItem}
           />
-          <S.ReportDownloadButton>
+          <S.ReportDownloadButton onClick={handleDownloadReportImage}>
             <HiOutlineDownload size={20} />
-            <S.ReportDownloadText>JSON 형식으로 다운로드</S.ReportDownloadText>
+            <S.ReportDownloadText>이미지로 다운로드</S.ReportDownloadText>
           </S.ReportDownloadButton>
         </S.SummaryReportHeader>
         <S.SummaryReportContent>
