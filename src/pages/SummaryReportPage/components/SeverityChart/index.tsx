@@ -12,7 +12,7 @@ interface SeverityChartProps {
   contents: ChartContent[];
 }
 
-const RADIUS = 60;
+const RADIUS = 55;
 const STROKE_WIDTH = 45;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
