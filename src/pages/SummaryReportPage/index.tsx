@@ -71,7 +71,7 @@ const SummaryReportPage = () => {
           />
           <S.ReportDownloadButton>
             <HiOutlineDownload size={20} />
-            <S.ReportDownloadText>JSON 형식으로 다운로드</S.ReportDownloadText>
+            <S.ReportDownloadText>이미지로 다운로드</S.ReportDownloadText>
           </S.ReportDownloadButton>
         </S.SummaryReportHeader>
         <S.SummaryReportContent>
