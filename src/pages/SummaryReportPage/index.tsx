@@ -66,7 +66,7 @@ const SummaryReportPage = () => {
       // 페이지 body에 붙이기
       document.body.appendChild(clone);
 
-      // 클론 캡쳐쳐
+      // 클론 캡쳐
       const canvas = await html2canvas(clone, { scale: 2 });
 
       // Blob 생성 및 다운로드
