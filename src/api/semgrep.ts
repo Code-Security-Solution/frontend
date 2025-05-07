@@ -2,6 +2,7 @@ import generateFormData from '@/utils/generateFormData';
 import { endpoint } from './endpoints';
 import { tokenAxios } from '@/utils/axios';
 import {
+  GetDetailedReportResponse,
   GetSummaryReportResponse,
   PostFileUploadRequest,
   PostFileUploadResponse,
@@ -33,5 +34,14 @@ interface GetSummaryReportParams {
 
 export const getSummaryReport = async ({ scan_id }: GetSummaryReportParams) => {
   const { data } = await tokenAxios.get<GetSummaryReportResponse>(endpoint.semgrep.GET_SUMMARY_REPORT(scan_id));
-  return data.result as SummaryReport;
+  return data.result;
+};
+
+interface GetDetailedReportParams {
+  scan_id: string;
+}
+
+export const getDetailedReport = async ({ scan_id }: GetDetailedReportParams) => {
+  const { data } = await tokenAxios.get<GetDetailedReportResponse>(endpoint.semgrep.GET_SUMMARY_REPORT(scan_id));
+  return data.result;
 };
