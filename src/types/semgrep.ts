@@ -12,7 +12,7 @@ export interface PostFileUploadResult {
   uploaded_files: string[];
 }
 
-export type PostFileUploadResponse = ApiResponse<PostFileUploadRequest>;
+export type PostFileUploadResponse = ApiResponse<PostFileUploadResult>;
 
 export type GetTotalScanResultResponse = ApiResponse<SemgrepJsonRootObject>;
 

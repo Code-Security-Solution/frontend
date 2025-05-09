@@ -6,7 +6,6 @@ import {
   GetSummaryReportResponse,
   PostFileUploadRequest,
   PostFileUploadResponse,
-  SummaryReport,
 } from '@/types/semgrep';
 
 export const postFileUpload = async (requestData: PostFileUploadRequest) => {
