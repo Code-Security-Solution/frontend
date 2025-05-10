@@ -2,13 +2,16 @@ import * as S from './styles';
 import { FaFileCode, FaTimes } from 'react-icons/fa';
 import useFileUpload from './hooks/useFileUpload';
 import UndraggableWrapper from '@/components/common/UndraggableWrapper';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postFileUpload } from '@/api/semgrep';
 import { useNavigate } from 'react-router-dom';
 import { PostFileUploadResult } from '@/types/semgrep';
+import { useAuthTokenStore } from '@/stores/useAuthTokenStore';
 
 const LandingPage = () => {
+  const { accessToken } = useAuthTokenStore();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { files, isDragging, fileInputRef, handleFileInputChange, handleClickFileInput, handleDeleteFile } =
     useFileUpload();
 
@@ -19,7 +22,7 @@ const LandingPage = () => {
     mutationKey: ['fileUpload'],
     onSuccess: (data) => {
       const scanId = (data.result as PostFileUploadResult).scan_id;
-      console.log('File analyze success:', data);
+      if (accessToken) queryClient.invalidateQueries({ queryKey: ['myFiles', accessToken] });
       navigate(`/summary/${scanId}`);
     },
     onError: (error) => {

@@ -1,4 +1,5 @@
 import { endpoint } from '@/api/endpoints';
+import { useAuthTokenStore } from '@/stores/useAuthTokenStore';
 import {
   GetUserInfoResponse,
   PostLoginRequest,
@@ -7,6 +8,7 @@ import {
   PostRegisterResponse,
 } from '@/types/users';
 import { http, HttpResponse } from 'msw';
+import { MOCK_MY_FILES } from '../mockData/myFiles';
 
 const baseURL = import.meta.env.VITE_API_URL;
 
@@ -66,7 +68,7 @@ const postLogin = () =>
 
 const getUserProfile = () =>
   http.get(`${baseURL}${endpoint.users.GET_USER_INFO}`, async () => {
-    const token = localStorage.getItem('accessToken');
+    const token = useAuthTokenStore.getState().accessToken;
 
     if (!token) {
       return HttpResponse.json({ error: '토큰 에러' }, { status: 401 });
@@ -84,6 +86,22 @@ const getUserProfile = () =>
     return HttpResponse.json(response, { status: 200 });
   });
 
-const authHandler = [postRegister(), postLogin(), getUserProfile()];
+const getMyFiles = () =>
+  http.get(`${baseURL}${endpoint.users.GET_USER_SCAN_HISTORY}`, async () => {
+    const token = useAuthTokenStore.getState().accessToken;
+
+    if (!token) {
+      return HttpResponse.json({ error: '토큰 에러' }, { status: 401 });
+    }
+
+    const response = {
+      status: 200,
+      message: '파일 목록 조회 성공',
+      result: MOCK_MY_FILES,
+    };
+    return HttpResponse.json(response, { status: 200 });
+  });
+
+const authHandler = [postRegister(), postLogin(), getUserProfile(), getMyFiles()];
 
 export default authHandler;

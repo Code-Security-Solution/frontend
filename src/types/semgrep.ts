@@ -12,7 +12,7 @@ export interface PostFileUploadResult {
   uploaded_files: string[];
 }
 
-export type PostFileUploadResponse = ApiResponse<PostFileUploadRequest>;
+export type PostFileUploadResponse = ApiResponse<PostFileUploadResult>;
 
 export type GetTotalScanResultResponse = ApiResponse<SemgrepJsonRootObject>;
 
@@ -52,3 +52,30 @@ export interface SummaryReport {
 }
 
 export type GetSummaryReportResponse = ApiResponse<SummaryReport>;
+
+export interface DetailedReport {
+  user_id: string | null;
+  id: string;
+  file: string;
+  location: {
+    start: { line: number; column: number };
+    end: { line: number; column: number };
+  };
+  type: string;
+  message: string;
+  severity: Severity;
+  suggestion: string;
+  code_snippet: string;
+  metadata: {
+    cwe: string[];
+    category: string;
+    technology: string[];
+    subcategory: string[];
+    likelihood: string;
+    impact: string;
+    vulnerability_class: string[];
+  };
+  references: string[];
+}
+
+export type GetDetailedReportResponse = ApiResponse<DetailedReport>;

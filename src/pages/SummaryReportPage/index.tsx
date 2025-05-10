@@ -62,6 +62,7 @@ const SummaryReportPage = () => {
       clone.style.width = `${original.scrollWidth}px`;
       clone.style.height = 'auto';
       clone.style.overflow = 'visible';
+      clone.style.backgroundColor = '#f3f4f6';
 
       // 페이지 body에 붙이기
       document.body.appendChild(clone);

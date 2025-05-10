@@ -1,4 +1,5 @@
 import {
+  GetMyFilesResponse,
   GetUserInfoResponse,
   PostLoginRequest,
   PostLoginResponse,
@@ -20,5 +21,10 @@ export const postLogin = async (requestData: PostLoginRequest) => {
 
 export const getUserInfo = async () => {
   const { data } = await tokenAxios.get<GetUserInfoResponse>(endpoint.users.GET_USER_INFO);
+  return data.result;
+};
+
+export const getMyFiles = async () => {
+  const { data } = await tokenAxios.get<GetMyFilesResponse>(endpoint.users.GET_USER_SCAN_HISTORY);
   return data.result;
 };

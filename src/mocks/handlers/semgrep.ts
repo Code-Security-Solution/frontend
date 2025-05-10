@@ -19,7 +19,7 @@ const postFileUpload = () =>
   });
 
 const getSummaryReport = () =>
-  http.get(`${baseURL}${endpoint.semgrep.GET_SUMMARY_REPORT(MOCK_SCAN_ID)}`, async () => {
+  http.get(new RegExp(`${baseURL}/summary-report/${MOCK_SCAN_ID}`), async () => {
     return HttpResponse.json({
       status: 200,
       message: '성공',
