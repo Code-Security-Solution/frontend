@@ -25,3 +25,28 @@ export interface TokenResult {
 export type PostLoginResponse = ApiResponse<TokenResult>;
 
 export type GetUserInfoResponse = ApiResponse<UserInfoResult>;
+
+export interface ScanInfo {
+  email: string;
+  file_id: string;
+  file_path: string[];
+  result_file: string;
+  translated_result_file: string;
+  created_at: Date;
+  download_links: {
+    source_single: string;
+    source_all: string;
+    result: string;
+    translated_result: string;
+    view_summary: string;
+    view_result: string;
+  };
+}
+export interface MyFilesResult {
+  user_email: string;
+  files_count: number;
+  files: ScanInfo[];
+  files_list: string[];
+}
+
+export type GetMyFilesResponse = ApiResponse<MyFilesResult>;
