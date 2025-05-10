@@ -1,3 +1,4 @@
+import { useAuthTokenStore } from '@/stores/useAuthTokenStore';
 import axios from 'axios';
 
 export const tokenAxios = axios.create({
@@ -11,10 +12,10 @@ export const tokenAxios = axios.create({
 });
 
 tokenAxios.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken');
+  const { accessToken } = useAuthTokenStore();
 
-  if (token) {
-    config.headers['x-access-token'] = token;
+  if (accessToken) {
+    config.headers['x-access-token'] = accessToken;
   }
 
   return config;
