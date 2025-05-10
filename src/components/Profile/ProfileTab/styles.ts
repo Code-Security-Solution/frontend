@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ProfileTabContainer = styled.section`
   position: absolute;
+  z-index: ${({ theme }) => theme.zIndex.dropdown};
   top: 4rem;
   right: 0;
 
