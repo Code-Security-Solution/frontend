@@ -14,7 +14,7 @@ const ScanHistoryList = () => {
     queryKey: ['myFiles', accessToken],
     queryFn: getMyFiles,
     enabled: !!accessToken,
-    staleTime: 60 * 60 * 1000,
+    staleTime: 10 * 60 * 1000,
   });
 
   if (!data) return null;
