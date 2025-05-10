@@ -32,8 +32,8 @@ const ScanHistoryList = () => {
         const fileNames = parsedFilePath.map((path) => path[path.length - 1]).join(', ');
 
         return (
-          <UndraggableWrapper>
-            <S.ScanHistoryItem key={scan.file_id} onClick={() => handleHistoryItemClick(scan.file_id)}>
+          <UndraggableWrapper key={scan.file_id}>
+            <S.ScanHistoryItem onClick={() => handleHistoryItemClick(scan.file_id)}>
               <S.ScanDate>{new Date(scan.created_at).toLocaleDateString()}</S.ScanDate>
               <S.ScanFileSection>
                 <FaFile size={24} />
