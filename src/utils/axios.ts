@@ -12,10 +12,10 @@ export const tokenAxios = axios.create({
 });
 
 tokenAxios.interceptors.request.use((config) => {
-  const { accessToken } = useAuthTokenStore();
+  const token = useAuthTokenStore.getState().accessToken;
 
-  if (accessToken) {
-    config.headers['x-access-token'] = accessToken;
+  if (token) {
+    config.headers['x-access-token'] = token;
   }
 
   return config;
