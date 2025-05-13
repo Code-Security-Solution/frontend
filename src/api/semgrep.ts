@@ -9,7 +9,8 @@ import {
 } from '@/types/semgrep';
 
 export const postFileUpload = async (requestData: PostFileUploadRequest) => {
-  const formData = generateFormData(requestData);
+  const formData = new FormData();
+  requestData.files.forEach((file) => formData.append('source_code', file));
 
   const { data } = await tokenAxios.post<PostFileUploadResponse>(endpoint.semgrep.POST_FILE_UPLOAD, formData, {
     headers: {
@@ -38,9 +39,12 @@ export const getSummaryReport = async ({ scan_id }: GetSummaryReportParams) => {
 
 interface GetDetailedReportParams {
   scan_id: string;
+  fingerprint: string;
 }
 
-export const getDetailedReport = async ({ scan_id }: GetDetailedReportParams) => {
-  const { data } = await tokenAxios.get<GetDetailedReportResponse>(endpoint.semgrep.GET_SUMMARY_REPORT(scan_id));
+export const getDetailedReport = async ({ scan_id, fingerprint }: GetDetailedReportParams) => {
+  const { data } = await tokenAxios.get<GetDetailedReportResponse>(
+    endpoint.semgrep.GET_DETAILED_REPORT(scan_id, fingerprint),
+  );
   return data.result;
 };

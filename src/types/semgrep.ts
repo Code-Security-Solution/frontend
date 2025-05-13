@@ -4,11 +4,11 @@ import theme from '@/styles/theme';
 import { ApiResponse } from './common';
 
 export interface PostFileUploadRequest {
-  files: File[];
+  files: Blob[];
 }
 
 export interface PostFileUploadResult {
-  scan_id: string;
+  file_id: string;
   uploaded_files: string[];
 }
 
