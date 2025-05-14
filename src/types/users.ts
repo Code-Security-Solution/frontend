@@ -29,17 +29,19 @@ export type GetUserInfoResponse = ApiResponse<UserInfoResult>;
 export interface ScanInfo {
   email: string;
   file_id: string;
-  file_path: string[];
+  file_paths: string[];
   result_file: string;
   translated_result_file: string;
+  uploaded_file_id: string;
   created_at: Date;
   download_links: {
-    source_single: string;
-    source_all: string;
     result: string;
+    source_all: string;
+    source_single: string;
     translated_result: string;
-    view_summary: string;
+    view_detail: string; // TODO: 수정 예정
     view_result: string;
+    view_summary: string;
   };
 }
 export interface MyFilesResult {
