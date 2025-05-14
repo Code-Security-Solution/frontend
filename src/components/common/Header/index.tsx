@@ -5,11 +5,10 @@ import ProfileInfo from '@/components/Profile/ProfileInfo';
 import UndraggableWrapper from '../UndraggableWrapper';
 import { useUserInfoStore } from '@/stores/useUserInfoStore';
 import { useAuthTokenStore } from '@/stores/useAuthTokenStore';
-import { getUserInfo } from '@/api/users';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import useModalStore from '@/stores/useModalStore';
 import LogoutModal from './components/LogoutModal';
+import useGetUserInfo from '@/hooks/useGetUserInfo';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,12 +16,7 @@ const Header = () => {
   const { isAuthenticated, userInfo, setUserInfo, clearUserInfo } = useUserInfoStore();
   const { openModal } = useModalStore();
 
-  const { data } = useQuery({
-    queryKey: ['userProfile', accessToken],
-    queryFn: getUserInfo,
-    enabled: !!accessToken,
-    staleTime: 60 * 60 * 1000,
-  });
+  const { data, isError } = useGetUserInfo();
 
   useEffect(() => {
     if (data) {
@@ -34,11 +28,11 @@ const Header = () => {
   }, [data]);
 
   useEffect(() => {
-    if (accessToken && !data) {
+    if (accessToken && isError) {
       clearUserInfo();
       openModal('alert', <LogoutModal />);
     }
-  }, [accessToken, data]);
+  }, [accessToken, isError]);
 
   const handleClickLogoIcon = () => {
     navigate('/');
