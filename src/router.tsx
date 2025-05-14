@@ -11,6 +11,7 @@ import ErrorPage from './pages/ErrorPage';
 import { Suspense } from 'react';
 import DimmedLoadingPage from './pages/LoadingPage/DimmedLoadingPage';
 import ModalRenderer from './components/common/ModalRenderer';
+import DetailedReportPage from './pages/DetailedReportPage';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       { index: true, element: <LandingPage /> },
       { path: '/introduction', element: <IntroductionPage /> },
       { path: '/summary/:scanId', element: <SummaryReportPage /> },
+      { path: '/summary/:scanId/:vulnId', element: <DetailedReportPage /> },
 
       // 로그인 안 한 사용자만 접근 가능한 페이지
       {
