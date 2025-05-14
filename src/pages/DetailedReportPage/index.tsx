@@ -15,10 +15,14 @@ const DetailedReportPage = () => {
   const { data } = useGetDetailedReport({ scanId, fingerprintId: vulnId });
   if (!data) return <DimmedLoadingPage />;
 
+  const handleClickGoBack = () => {
+    navigate(`/summary/${scanId}`);
+  };
+
   return (
     <S.DetailedReportPageContainer>
       <S.GoBackButton>
-        <FaArrowLeft size={32} onClick={() => navigate(-1)} />
+        <FaArrowLeft size={32} onClick={handleClickGoBack} />
       </S.GoBackButton>
       <S.PatternSection>
         <S.SemgrepPatternSection>
