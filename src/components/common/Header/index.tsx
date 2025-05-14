@@ -8,11 +8,14 @@ import { useAuthTokenStore } from '@/stores/useAuthTokenStore';
 import { getUserInfo } from '@/api/users';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import useModalStore from '@/stores/useModalStore';
+import LogoutModal from './components/LogoutModal';
 
 const Header = () => {
   const navigate = useNavigate();
   const { accessToken } = useAuthTokenStore();
-  const { isAuthenticated, userInfo, setUserInfo } = useUserInfoStore();
+  const { isAuthenticated, userInfo, setUserInfo, clearUserInfo } = useUserInfoStore();
+  const { openModal } = useModalStore();
 
   const { data } = useQuery({
     queryKey: ['userProfile', accessToken],
@@ -29,6 +32,13 @@ const Header = () => {
       });
     }
   }, [data]);
+
+  useEffect(() => {
+    if (accessToken && !data) {
+      clearUserInfo();
+      openModal('alert', <LogoutModal />);
+    }
+  }, [accessToken, data]);
 
   const handleClickLogoIcon = () => {
     navigate('/');

@@ -3,6 +3,7 @@ export const endpoint = {
     POST_FILE_UPLOAD: '/scan',
     GET_TOTAL_REPORT: (scanId: string) => `/scan-result/${scanId}`,
     GET_SUMMARY_REPORT: (scanId: string) => `/summary-report/${scanId}`,
+    GET_DETAILED_REPORT: (scanId: string, fingerprint: string) => `/detail-report/${scanId}?fingerprint=${fingerprint}`,
     GET_DOWNLOAD_SCAN_RESULT: (scanId: string) => `/download-result/${scanId}`,
     GET_DOWNLOAD_SOURCE_CODE: (scanId: string) => `/download-source/${scanId}`,
     GET_DOWNLOAD_ALL_SOURCE_CODE: (scanId: string) => `/download-all-sources/${scanId}`,

@@ -21,7 +21,7 @@ const LandingPage = () => {
     },
     mutationKey: ['fileUpload'],
     onSuccess: (data) => {
-      const scanId = (data.result as PostFileUploadResult).scan_id;
+      const scanId = (data.result as PostFileUploadResult).file_id;
       if (accessToken) queryClient.invalidateQueries({ queryKey: ['myFiles', accessToken] });
       navigate(`/summary/${scanId}`);
     },

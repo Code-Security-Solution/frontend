@@ -28,7 +28,7 @@ const ScanHistoryList = () => {
   return (
     <S.ScanHistoryList>
       {data.files.map((scan) => {
-        const parsedFilePath = scan.file_path.map((path) => path.split('/'));
+        const parsedFilePath = scan.file_paths.map((path) => path.split('\\'));
         const fileNames = parsedFilePath.map((path) => path[path.length - 1]).join(', ');
 
         return (

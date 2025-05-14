@@ -32,7 +32,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       column: 5,
       type: 'type1',
       message: 'message1message1message1message1message1message1',
-      severity: 'critical',
+      severity: 'CRITICAL',
     },
     {
       id: 'vuln2',
@@ -41,7 +41,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       column: 10,
       type: 'type2',
       message: 'message2',
-      severity: 'error',
+      severity: 'ERROR',
     },
     {
       id: 'vuln3',
@@ -51,7 +51,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       type: 'type3',
       message:
         'message3message3message3message3message3message3message3message3message3message3message3message3message3message3message3message3message3',
-      severity: 'warning',
+      severity: 'WARNING',
     },
     {
       id: 'vuln4',
@@ -60,7 +60,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       column: 20,
       type: 'type4',
       message: 'message4message4message4message4message4message4message4message4',
-      severity: 'info',
+      severity: 'INFO',
     },
     {
       id: 'vuln5',
@@ -69,7 +69,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       column: 25,
       type: 'type5',
       message: 'message5message5message5message5message5message5',
-      severity: 'error',
+      severity: 'ERROR',
     },
     {
       id: 'vuln6',
@@ -78,7 +78,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       column: 25,
       type: 'type6',
       message: 'message6message6message6message6message6',
-      severity: 'error',
+      severity: 'ERROR',
     },
     {
       id: 'vuln7',
@@ -87,7 +87,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       column: 25,
       type: 'type7',
       message: 'message7',
-      severity: 'critical',
+      severity: 'CRITICAL',
     },
     {
       id: 'vuln8',
@@ -96,7 +96,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       column: 25,
       type: 'type8',
       message: 'message8',
-      severity: 'critical',
+      severity: 'CRITICAL',
     },
     {
       id: 'vuln9',
@@ -105,7 +105,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       column: 25,
       type: 'type9',
       message: 'message9',
-      severity: 'warning',
+      severity: 'WARNING',
     },
     {
       id: 'vuln10',
@@ -114,7 +114,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       column: 25,
       type: 'type10',
       message: 'message10',
-      severity: 'warning',
+      severity: 'WARNING',
     },
     {
       id: 'vuln11',
@@ -123,7 +123,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       column: 25,
       type: 'type11',
       message: 'message11',
-      severity: 'info',
+      severity: 'INFO',
     },
     {
       id: 'vuln12',
@@ -132,7 +132,7 @@ export const MOCK_SUMMARY_REPORT: SummaryReport = {
       column: 25,
       type: 'type12',
       message: 'message12',
-      severity: 'info',
+      severity: 'INFO',
     },
   ],
 };

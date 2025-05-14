@@ -14,7 +14,7 @@ const useFilterSummaryReport = ({ summaryReport }: UseFilterSummaryReport) => {
   });
 
   // 심각도별 보기 정렬
-  const severityOrder: Severity[] = ['critical', 'error', 'warning', 'info'];
+  const severityOrder: Severity[] = ['CRITICAL', 'ERROR', 'WARNING', 'INFO'];
   const groupedBySeverity = severityOrder.map((severity) =>
     summaryReport.vulnerabilities.filter((vuln) => vuln.severity === severity),
   );
