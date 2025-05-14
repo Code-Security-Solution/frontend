@@ -50,7 +50,12 @@ const SeverityChart = ({ contents }: SeverityChartProps) => {
             const labelY = 80 + RADIUS * Math.sin(radians);
 
             // 항목이 차지하는 각도가 임계치보다 작으면 count만 표시
-            const labelText = angle < MIN_ANGLE_FOR_FULL_LABEL ? `${item.count}` : `${item.severity}, ${item.count}`;
+            const labelText =
+              angle < MIN_ANGLE_FOR_FULL_LABEL
+                ? item.count === 0
+                  ? ''
+                  : `${item.count}`
+                : `${item.severity}, ${item.count}`;
 
             return (
               <g key={index}>
@@ -68,7 +73,7 @@ const SeverityChart = ({ contents }: SeverityChartProps) => {
                   x={labelX}
                   y={labelY}
                   fontSize="10"
-                  fill={item.severity === 'critical' || item.severity === 'error' ? 'white' : 'black'}
+                  fill={item.severity === 'CRITICAL' || item.severity === 'ERROR' ? 'white' : 'black'}
                   textAnchor="middle"
                   alignmentBaseline="middle"
                   transform={`rotate(90, ${labelX}, ${labelY})`}
