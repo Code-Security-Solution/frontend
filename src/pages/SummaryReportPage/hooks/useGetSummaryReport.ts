@@ -7,7 +7,7 @@ interface UseGetSummaryReportProps {
 
 const useGetSummaryReport = ({ scanId }: UseGetSummaryReportProps) => {
   const { data: summaryReport } = useQuery({
-    queryKey: ['summaryReport'],
+    queryKey: ['summaryReport', scanId],
     queryFn: async () => await getSummaryReport({ scan_id: scanId }),
     staleTime: 60 * 60 * 1000,
   });
