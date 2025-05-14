@@ -14,6 +14,7 @@ import { Vulnerability } from '@/types/semgrep';
 import VulnerabilityList from './components/VulnerabilityList';
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
+import DimmedLoadingPage from '../LoadingPage/DimmedLoadingPage';
 
 export type VulnerabilityFilter = 'groupBySeverity' | 'groupByType';
 
@@ -32,7 +33,7 @@ const SummaryReportPage = () => {
   if (!scanId) return null;
 
   const { summaryReport } = useGetSummaryReport({ scanId });
-  if (!summaryReport) return null;
+  if (!summaryReport) return <DimmedLoadingPage />;
 
   const { fileVulnerabilities, groupedBySeverity, groupedByType, severityChartData } = useFilterSummaryReport({
     summaryReport,
