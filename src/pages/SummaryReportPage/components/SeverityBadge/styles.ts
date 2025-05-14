@@ -13,13 +13,13 @@ export const SeverityBadgeContainer = styled.div<{ $severity: Severity }>`
 
   color: ${({ theme, $severity }) => {
     switch ($severity) {
-      case 'critical':
+      case 'CRITICAL':
         return theme.colors.white;
-      case 'error':
+      case 'ERROR':
         return theme.colors.white;
-      case 'warning':
+      case 'WARNING':
         return theme.colors.black;
-      case 'info':
+      case 'INFO':
         return theme.colors.black;
       default:
         return theme.colors.white;
@@ -28,13 +28,13 @@ export const SeverityBadgeContainer = styled.div<{ $severity: Severity }>`
 
   background-color: ${({ theme, $severity }) => {
     switch ($severity) {
-      case 'critical':
+      case 'CRITICAL':
         return theme.colors.severity_critial;
-      case 'error':
+      case 'ERROR':
         return theme.colors.severity_error;
-      case 'warning':
+      case 'WARNING':
         return theme.colors.severity_warning;
-      case 'info':
+      case 'INFO':
         return theme.colors.severity_info;
       default:
         return theme.colors.black;

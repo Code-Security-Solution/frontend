@@ -16,13 +16,13 @@ export type PostFileUploadResponse = ApiResponse<PostFileUploadResult>;
 
 export type GetTotalScanResultResponse = ApiResponse<SemgrepJsonRootObject>;
 
-export type Severity = 'critical' | 'error' | 'warning' | 'info';
+export type Severity = 'CRITICAL' | 'ERROR' | 'WARNING' | 'INFO';
 
 export const getSeverityColors = (): Record<Severity, CSSProperties['color']> => ({
-  critical: theme.colors.severity_critial,
-  error: theme.colors.severity_error,
-  warning: theme.colors.severity_warning,
-  info: theme.colors.severity_info,
+  CRITICAL: theme.colors.severity_critial,
+  ERROR: theme.colors.severity_error,
+  WARNING: theme.colors.severity_warning,
+  INFO: theme.colors.severity_info,
 });
 
 interface SeveritySummary {
