@@ -54,6 +54,7 @@ export interface SummaryReport {
 export type GetSummaryReportResponse = ApiResponse<SummaryReport>;
 
 export interface DetailedReport {
+  code: string;
   user_id: string | null;
   id: string;
   file: string;
