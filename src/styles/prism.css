@@ -1,0 +1,9 @@
+.highlight-line-red {
+  border-bottom: 2px solid red;
+  padding-bottom: 1px;
+}
+
+/* 괄호 색 */
+.custom-punctuation {
+  color: #cccccc !important;
+}
