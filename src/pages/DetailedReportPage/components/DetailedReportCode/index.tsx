@@ -42,6 +42,9 @@ const DetailedReportCode = ({ code, filename, startLine, endLine }: DetailedRepo
                   cls.push('highlight-line-red');
                 }
               }
+              if (cls?.includes('token') && cls?.includes('punctuation')) {
+                cls.push('custom-punctuation');
+              }
             },
           },
         ],
