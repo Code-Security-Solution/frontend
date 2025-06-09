@@ -6,6 +6,7 @@ import DimmedLoadingPage from '../LoadingPage/DimmedLoadingPage';
 import SeverityBadge from '../SummaryReportPage/components/SeverityBadge';
 import { FiTarget } from 'react-icons/fi';
 import Tooltip from '@/components/common/Tooltip';
+import DetailedReportCode from './components/DetailedReportCode';
 
 const DetailedReportPage = () => {
   const navigate = useNavigate();
@@ -47,6 +48,12 @@ const DetailedReportPage = () => {
             </S.VulnerabilityOrigin>
           </S.ScanResultSection>
           <S.PatternMessage>{data.message}</S.PatternMessage>
+          <DetailedReportCode
+            code={data.code}
+            filename={data.file}
+            startLine={data.location.start.line}
+            endLine={data.location.end.line}
+          />
         </S.SemgrepPatternSection>
         <S.AdditionalInfoSection>
           <S.SectionHeader>
