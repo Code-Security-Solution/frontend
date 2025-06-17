@@ -3,6 +3,7 @@ import { tokenAxios } from '@/utils/axios';
 import {
   GetDetailedReportResponse,
   GetSummaryReportResponse,
+  PostAIReportResponse,
   PostFileUploadRequest,
   PostFileUploadResponse,
 } from '@/types/semgrep';
@@ -45,5 +46,15 @@ export const getDetailedReport = async ({ scan_id, fingerprint }: GetDetailedRep
   const { data } = await tokenAxios.get<GetDetailedReportResponse>(
     endpoint.semgrep.GET_DETAILED_REPORT(scan_id, fingerprint),
   );
+  return data.result;
+};
+
+export interface PostAIReportParams {
+  scan_id: string;
+  fingerprint: string;
+}
+
+export const postAIReport = async ({ scan_id, fingerprint }: PostAIReportParams) => {
+  const { data } = await tokenAxios.post<PostAIReportResponse>(endpoint.semgrep.POST_AI_REPORT(scan_id, fingerprint));
   return data.result;
 };
