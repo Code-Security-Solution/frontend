@@ -47,7 +47,9 @@ const DetailedReportPage = () => {
           <FaArrowLeft size={32} onClick={handleClickGoBack} />
         </S.GoBackButton>
         {data.ai_report || isPending ? (
-          <Button styleType="disabled">이미 레포트를 생성했어요</Button>
+          <Button styleType="disabled" isLoading={isPending}>
+            이미 레포트를 생성했어요
+          </Button>
         ) : (
           <Button styleType="primary" onClick={() => mutateAIReport()} isLoading={isPending}>
             AI 레포트 생성하기
