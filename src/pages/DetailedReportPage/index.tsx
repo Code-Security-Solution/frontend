@@ -7,14 +7,34 @@ import SeverityBadge from '../SummaryReportPage/components/SeverityBadge';
 import { FiTarget } from 'react-icons/fi';
 import Tooltip from '@/components/common/Tooltip';
 import DetailedReportCode from './components/DetailedReportCode';
+import Button from '@/components/common/Button';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { postAIReport } from '@/api/semgrep';
+import MarkdownEditor from '@uiw/react-markdown-editor';
 
 const DetailedReportPage = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { scanId, vulnId } = useParams();
   if (!scanId || !vulnId) return null;
 
+  const { mutate: mutateAIReport, isPending } = useMutation({
+    mutationFn: async () => {
+      return await postAIReport({ scan_id: scanId, fingerprint: vulnId });
+    },
+    mutationKey: ['aiReport', scanId, vulnId],
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['detailedReport', scanId, vulnId] });
+    },
+    onError: (error) => {
+      console.error('ai report generation error:', error);
+    },
+  });
+
   const { data } = useGetDetailedReport({ scanId, fingerprintId: vulnId });
   if (!data) return <DimmedLoadingPage />;
+
+  console.log('Detailed Report Data:', data);
 
   const handleClickGoBack = () => {
     navigate(`/summary/${scanId}`);
@@ -22,9 +42,18 @@ const DetailedReportPage = () => {
 
   return (
     <S.DetailedReportPageContainer>
-      <S.GoBackButton>
-        <FaArrowLeft size={32} onClick={handleClickGoBack} />
-      </S.GoBackButton>
+      <S.HeaderSection>
+        <S.GoBackButton>
+          <FaArrowLeft size={32} onClick={handleClickGoBack} />
+        </S.GoBackButton>
+        {data.ai_report || isPending ? (
+          <Button styleType="disabled">이미 레포트를 생성했어요</Button>
+        ) : (
+          <Button styleType="primary" onClick={() => mutateAIReport()} isLoading={isPending}>
+            AI 레포트 생성하기
+          </Button>
+        )}
+      </S.HeaderSection>
       <S.PatternSection>
         <S.SemgrepPatternSection>
           <S.SectionHeader>
@@ -79,6 +108,12 @@ const DetailedReportPage = () => {
         <S.SectionTitle>{'<어떻게 대처하나요?>'}</S.SectionTitle>
         <S.SolutionMessage>{data.suggestion}</S.SolutionMessage>
       </S.SolutionSection>
+      {data.ai_report && data.ai_report_contents && (
+        <S.AIReportSection data-color-mode="light">
+          <S.SectionTitle>{'<AI 레포트>'}</S.SectionTitle>
+          <MarkdownEditor.Markdown source={data.ai_report_contents} />
+        </S.AIReportSection>
+      )}
     </S.DetailedReportPageContainer>
   );
 };
