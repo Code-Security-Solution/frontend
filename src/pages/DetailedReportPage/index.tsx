@@ -106,10 +106,10 @@ const DetailedReportPage = () => {
           )}
         </S.AdditionalInfoSection>
       </S.PatternSection>
-      <S.SolutionSection>
+      {/* <S.SolutionSection>
         <S.SectionTitle>{'<어떻게 대처하나요?>'}</S.SectionTitle>
         <S.SolutionMessage>{data.suggestion}</S.SolutionMessage>
-      </S.SolutionSection>
+      </S.SolutionSection> */}
       {data.ai_report && data.ai_report_contents && (
         <S.AIReportSection data-color-mode="light">
           <S.SectionTitle>{'<AI 레포트>'}</S.SectionTitle>

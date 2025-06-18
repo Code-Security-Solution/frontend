@@ -46,11 +46,11 @@ export const PatternSection = styled.div`
 `;
 
 export const SemgrepPatternSection = styled.div`
-  min-width: 50%;
+  flex-grow: 1;
 `;
 
 export const AdditionalInfoSection = styled.div`
-  min-width: 50%;
+  flex-grow: 1;
 `;
 
 export const SectionHeader = styled.div`
