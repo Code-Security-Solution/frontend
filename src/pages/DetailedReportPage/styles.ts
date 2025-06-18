@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const DetailedReportPageContainer = styled.div`
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
@@ -10,9 +11,15 @@ export const DetailedReportPageContainer = styled.div`
   padding: 3.2rem;
 `;
 
+export const HeaderSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
+
 export const GoBackButton = styled.div`
   display: flex;
-  width: 100%;
 
   & > * {
     cursor: pointer;
@@ -39,11 +46,11 @@ export const PatternSection = styled.div`
 `;
 
 export const SemgrepPatternSection = styled.div`
-  width: 100%;
+  flex-grow: 1;
 `;
 
 export const AdditionalInfoSection = styled.div`
-  width: 100%;
+  flex-grow: 1;
 `;
 
 export const SectionHeader = styled.div`
@@ -123,4 +130,17 @@ export const SolutionSection = styled.div`
 
 export const SolutionMessage = styled.p`
   ${({ theme }) => theme.fonts.mediumBody};
+`;
+
+export const AIReportSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  width: 100%;
+  padding: 3.2rem;
+  border: 0.1rem solid ${({ theme }) => theme.colors.gray200};
+  border-radius: 1rem;
+
+  background-color: ${({ theme }) => theme.colors.white};
 `;

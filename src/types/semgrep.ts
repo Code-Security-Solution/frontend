@@ -54,10 +54,14 @@ export interface SummaryReport {
 export type GetSummaryReportResponse = ApiResponse<SummaryReport>;
 
 export interface DetailedReport {
+  ai_report: boolean;
+  ai_report_contents: string | null;
   code: string;
   user_id: string | null;
   id: string;
   file: string;
+  file_id: string;
+  fingerprint: string;
   location: {
     start: { line: number; column: number };
     end: { line: number; column: number };
@@ -80,3 +84,10 @@ export interface DetailedReport {
 }
 
 export type GetDetailedReportResponse = ApiResponse<DetailedReport>;
+
+export interface AIReport {
+  ai_report: boolean;
+  ai_report_contents: string | null;
+}
+
+export type PostAIReportResponse = ApiResponse<AIReport>;
